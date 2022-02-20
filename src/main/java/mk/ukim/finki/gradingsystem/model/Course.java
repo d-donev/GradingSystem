@@ -23,6 +23,9 @@ public class Course {
     @ManyToMany
     private List<Activity> activityList;
 
+    @ManyToMany
+    private List<Student> studentList;
+
     public Course() {
     }
 

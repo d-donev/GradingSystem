@@ -18,7 +18,7 @@ public class User {
 
     private String name;
 
-    private String username;
+    private String surname;
 
     private Role role;
 
@@ -28,9 +28,9 @@ public class User {
     public User() {
     }
 
-    public User(String name, String username, Role role, List<Course> courseList) {
+    public User(String name, String surname, Role role, List<Course> courseList) {
         this.name = name;
-        this.username = username;
+        this.surname = surname;
         this.role = role;
         this.courseList = courseList;
     }
