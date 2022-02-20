@@ -29,6 +29,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> search(String text) {
-        return this.userRepositoryJPA.findAllByNameContainingOrSurnameContaining(text);
+        return this.userRepositoryJPA.findAllByNameContainingOrSurnameContaining(text, text);
     }
 }
