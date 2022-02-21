@@ -1,0 +1,37 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Professors</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+</head>
+<body>
+<header>
+
+</header>
+<main>
+    <div class="container">
+        <h1>Professors</h1>
+        <table class="table table-stripped">
+            <tr>
+                <th>Name</th>
+                <th>Minimum</th>
+            </tr>
+            <tr th:each="a : ${activities}">
+                <td th:text="${a.getName()}"></td>
+                <td th:text="${a.getMinimum()}"></td>
+                <td>
+                    <form th:method="DELETE" th:action="@{'/activity/{id}/delete' (id=${a.getCode()})}">
+                        <button type="submit" class="btn btn-dark">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <br>
+        <a href="/activity/create" class="btn btn-dark">Create</a>
+        <a href="/" class="btn btn-dark">BACK</a>
+    </div>
+</main>
+</body>
+</html>

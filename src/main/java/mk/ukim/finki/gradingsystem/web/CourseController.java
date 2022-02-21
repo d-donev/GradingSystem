@@ -43,7 +43,7 @@ public class CourseController {
         model.addAttribute("course", course);
         model.addAttribute("activities", activityList);
         model.addAttribute("students", studentList);
-        return "course";
+        return "currentCourse";
     }
 
     @GetMapping("/create")
