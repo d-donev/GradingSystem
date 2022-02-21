@@ -7,48 +7,45 @@ import mk.ukim.finki.gradingsystem.model.Course;
 import mk.ukim.finki.gradingsystem.model.Professor;
 import mk.ukim.finki.gradingsystem.model.User;
 import mk.ukim.finki.gradingsystem.repositoryJPA.CourseRepositoryJPA;
-import mk.ukim.finki.gradingsystem.repositoryJPA.ProfessorRepositiryJPA;
-import mk.ukim.finki.gradingsystem.service.CourseService;
+import mk.ukim.finki.gradingsystem.repositoryJPA.ProfessorRepositoryJPA;
+import mk.ukim.finki.gradingsystem.repositoryJPA.UserRepositoryJPA;
 import mk.ukim.finki.gradingsystem.service.ProfessorService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
 public class ProfessorServiceImpl implements ProfessorService {
 
-    private final ProfessorRepositiryJPA professorRepositiryJPA;
+    private final ProfessorRepositoryJPA professorRepositoryJPA;
     private final CourseRepositoryJPA courseRepositoryJPA;
+    private final UserRepositoryJPA userRepositoryJPA;
 
-    public ProfessorServiceImpl(ProfessorRepositiryJPA professorRepositiryJPA, CourseRepositoryJPA courseRepositoryJPA) {
-        this.professorRepositiryJPA = professorRepositiryJPA;
+    public ProfessorServiceImpl(ProfessorRepositoryJPA professorRepositoryJPA, CourseRepositoryJPA courseRepositoryJPA, UserRepositoryJPA userRepositoryJPA) {
+        this.professorRepositoryJPA = professorRepositoryJPA;
         this.courseRepositoryJPA = courseRepositoryJPA;
+        this.userRepositoryJPA = userRepositoryJPA;
     }
 
     @Override
     public Professor findByEmail(String email) {
-        return this.professorRepositiryJPA.findById(email).orElseThrow(() -> new ProfessorNotFoundException(email));
+        return this.professorRepositoryJPA.findById(email).orElseThrow(() -> new ProfessorNotFoundException(email));
     }
 
     @Override
     public List<Professor> listAll() {
-        return this.professorRepositiryJPA.findAll();
+        return this.professorRepositoryJPA.findAll();
     }
 
     @Override
-    public Professor create(String email, String name, String surname, Role role, Long courseId) {
-        Course course = this.courseRepositoryJPA.findById(courseId).orElseThrow(() -> new CourseNotFoundException(courseId));
-        if(this.professorRepositiryJPA.findById(email).isPresent()){
-            Professor professor = this.professorRepositiryJPA.findById(email).orElseThrow(() -> new ProfessorNotFoundException(email));
-            professor.getUser().getCourseList().add(course);
-            return this.professorRepositiryJPA.save(professor);
-        }
-        List<Course> courses = new ArrayList<>();
-        courses.add(course);
+    @Transactional
+    public Professor create(String email, String name, String surname, Role role, List<Long> courseId) {
+        List<Course> courses = this.courseRepositoryJPA.findAllById(courseId);
         User user = new User(name, surname, role, courses);
+        userRepositoryJPA.save(user);
         Professor professor = new Professor(email, user);
-        return this.professorRepositiryJPA.save(professor);
+        return this.professorRepositoryJPA.save(professor);
     }
 
     @Override
@@ -58,13 +55,13 @@ public class ProfessorServiceImpl implements ProfessorService {
         professor.getUser().setName(name);
         professor.getUser().setSurname(surname);
         professor.getUser().setCourseList(courses);
-        return this.professorRepositiryJPA.save(professor);
+        return this.professorRepositoryJPA.save(professor);
     }
 
     @Override
     public Professor delete(String email) {
         Professor professor = this.findByEmail(email);
-        this.professorRepositiryJPA.delete(professor);
+        this.professorRepositoryJPA.delete(professor);
         return professor;
     }
 
@@ -73,6 +70,6 @@ public class ProfessorServiceImpl implements ProfessorService {
         Professor professor = this.findByEmail(email);
         Course course = this.courseRepositoryJPA.findById(courseId).orElseThrow(() -> new CourseNotFoundException(courseId));
         professor.getUser().getCourseList().add(course);
-        return this.professorRepositiryJPA.save(professor);
+        return this.professorRepositoryJPA.save(professor);
     }
 }

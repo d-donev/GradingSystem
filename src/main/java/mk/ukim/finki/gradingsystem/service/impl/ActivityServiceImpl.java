@@ -2,7 +2,7 @@ package mk.ukim.finki.gradingsystem.service.impl;
 
 import mk.ukim.finki.gradingsystem.exceptions.ActivityNotFoundException;
 import mk.ukim.finki.gradingsystem.model.Activity;
-import mk.ukim.finki.gradingsystem.repositoryJPA.ActivityRepositortJPA;
+import mk.ukim.finki.gradingsystem.repositoryJPA.ActivityRepositoryJPA;
 import mk.ukim.finki.gradingsystem.service.ActivityService;
 import org.springframework.stereotype.Service;
 
@@ -11,26 +11,26 @@ import java.util.List;
 @Service
 public class ActivityServiceImpl implements ActivityService {
 
-    private final ActivityRepositortJPA activityRepositortJPA;
+    private final ActivityRepositoryJPA activityRepositoryJPA;
 
-    public ActivityServiceImpl(ActivityRepositortJPA activityRepositortJPA) {
-        this.activityRepositortJPA = activityRepositortJPA;
+    public ActivityServiceImpl(ActivityRepositoryJPA activityRepositoryJPA) {
+        this.activityRepositoryJPA = activityRepositoryJPA;
     }
 
     @Override
     public Activity findById(Long id) {
-        return this.activityRepositortJPA.findById(id).orElseThrow(() -> new ActivityNotFoundException(id));
+        return this.activityRepositoryJPA.findById(id).orElseThrow(() -> new ActivityNotFoundException(id));
     }
 
     @Override
     public List<Activity> listAll() {
-        return this.activityRepositortJPA.findAll();
+        return this.activityRepositoryJPA.findAll();
     }
 
     @Override
     public Activity create(String name, Double min) {
         Activity activity = new Activity(name, min);
-        return this.activityRepositortJPA.save(activity);
+        return this.activityRepositoryJPA.save(activity);
     }
 
     @Override
@@ -38,13 +38,13 @@ public class ActivityServiceImpl implements ActivityService {
         Activity activity = this.findById(code);
         activity.setName(name);
         activity.setMinimum(min);
-        return this.activityRepositortJPA.save(activity);
+        return this.activityRepositoryJPA.save(activity);
     }
 
     @Override
     public Activity delete(Long code) {
         Activity activity = this.findById(code);
-        this.activityRepositortJPA.delete(activity);
+        this.activityRepositoryJPA.delete(activity);
         return activity;
     }
 }

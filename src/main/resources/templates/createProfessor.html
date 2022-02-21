@@ -1,0 +1,47 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Graded students</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+</head>
+<body>
+
+
+<div class="container">
+    <form th:method="POST" th:action="@{'/teachers/create'}">
+        <div class="mb-3">
+            <label for="email" class="form-label">Email address</label>
+            <input type="text" class="form-control" id="email" name="email">
+        </div>
+
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" name="name">
+        </div>
+
+        <div class="mb-3">
+            <label for="surname" class="form-label">Surname</label>
+            <input type="text" class="form-control" id="surname" name="surname">
+        </div>
+
+        <div class="mb-3">
+            <input type="hidden" class="form-control" id="role" name="role" value="PROFESSOR">
+        </div>
+
+        <div class="mb-3">
+            <select name="courseIdList" class="form-select" multiple aria-label="multiple select example">
+                <option selected>Open this select menu</option>
+                <option th:each="course : ${courses}" th:value="${course.getId()}" th:text="${course.getName()}"></option>
+            </select>
+        </div>
+
+
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+
+</body>
+</html>

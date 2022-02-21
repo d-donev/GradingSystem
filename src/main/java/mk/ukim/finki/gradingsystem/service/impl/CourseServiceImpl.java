@@ -4,7 +4,7 @@ import mk.ukim.finki.gradingsystem.exceptions.ActivityNotFoundException;
 import mk.ukim.finki.gradingsystem.exceptions.CourseNotFoundException;
 import mk.ukim.finki.gradingsystem.model.Activity;
 import mk.ukim.finki.gradingsystem.model.Course;
-import mk.ukim.finki.gradingsystem.repositoryJPA.ActivityRepositortJPA;
+import mk.ukim.finki.gradingsystem.repositoryJPA.ActivityRepositoryJPA;
 import mk.ukim.finki.gradingsystem.repositoryJPA.CourseRepositoryJPA;
 import mk.ukim.finki.gradingsystem.service.CourseService;
 import org.springframework.stereotype.Service;
@@ -15,11 +15,11 @@ import java.util.List;
 public class CourseServiceImpl implements CourseService {
 
     private final CourseRepositoryJPA courseRepositoryJPA;
-    private final ActivityRepositortJPA activityRepositortJPA;
+    private final ActivityRepositoryJPA activityRepositoryJPA;
 
-    public CourseServiceImpl(CourseRepositoryJPA courseRepositoryJPA, ActivityRepositortJPA activityRepositortJPA) {
+    public CourseServiceImpl(CourseRepositoryJPA courseRepositoryJPA, ActivityRepositoryJPA activityRepositoryJPA) {
         this.courseRepositoryJPA = courseRepositoryJPA;
-        this.activityRepositortJPA = activityRepositortJPA;
+        this.activityRepositoryJPA = activityRepositoryJPA;
     }
 
     @Override
@@ -34,7 +34,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course create(String name, String year, List<Long> activities) {
-        List<Activity> activityList = this.activityRepositortJPA.findAllById(activities);
+        List<Activity> activityList = this.activityRepositoryJPA.findAllById(activities);
         Course course = new Course(name, year, activityList);
         return this.courseRepositoryJPA.save(course);
     }
@@ -42,7 +42,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Course edit(Long courseId, String name, String year, List<Long> activities) {
         Course course = this.findById(courseId);
-        List<Activity> activityList = this.activityRepositortJPA.findAllById(activities);
+        List<Activity> activityList = this.activityRepositoryJPA.findAllById(activities);
 
         course.setName(name);
         course.setYear(year);
@@ -60,7 +60,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Course addActivityToCourse(Long courseId, Long activityId) {
         Course course = this.findById(courseId);
-        Activity activity = this.activityRepositortJPA.findById(activityId).
+        Activity activity = this.activityRepositoryJPA.findById(activityId).
                 orElseThrow(() -> new ActivityNotFoundException(activityId));
         course.getActivityList().add(activity);
         return this.courseRepositoryJPA.save(course);

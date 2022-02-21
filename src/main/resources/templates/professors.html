@@ -1,0 +1,28 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Professors</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+</head>
+<body>
+<header>
+
+</header>
+<main>
+    <div class="container">
+        <h1>Professors</h1>
+        <table class="table table-stripped">
+            <tr th:each="professor : ${professors}">
+                <th th:text="${professor.getEmail()}">Email</th>
+                <th th:text="${professor.getUser().getName()}">Name</th>
+                <th th:text="${professor.getUser().getSurname()}">Surname</th>
+            </tr>
+        </table>
+        <br>
+        <br>
+        <a href="/teachers/create" class="btn btn-dark">Create</a>
+    </div>
+</main>
+</body>
+</html>
