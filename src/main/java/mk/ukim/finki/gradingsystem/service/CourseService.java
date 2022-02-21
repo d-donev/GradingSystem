@@ -2,6 +2,7 @@ package mk.ukim.finki.gradingsystem.service;
 
 import mk.ukim.finki.gradingsystem.model.Activity;
 import mk.ukim.finki.gradingsystem.model.Course;
+import mk.ukim.finki.gradingsystem.model.Student;
 
 import java.util.List;
 
@@ -10,9 +11,9 @@ public interface CourseService {
 
     List<Course> listAll();
 
-    Course create(String name, String year, List<Long> activities);
+    Course create(String name, String year, List<Long> activities, List<Long> studentList);
 
-    Course edit(Long courseId, String name, String year, List<Long> activities);
+    Course edit(Long courseId, String name, String year, List<Long> activities, List<Long> studentList);
 
     Course delete(Long courseId);
 

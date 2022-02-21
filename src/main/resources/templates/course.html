@@ -1,0 +1,36 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Professors</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+</head>
+<body>
+<header>
+
+</header>
+<main>
+    <div class="container">
+        <h1 th:text="${course.getName()}"></h1>
+        <table class="table table-stripped">
+            <thead>
+              <th>Index</th>
+              <th>Name</th>
+              <th>Surname</th>
+              <th th:each="activity : ${course.getActivityList()}" th:text="${activity.getName()}"></th>
+            </thead>
+            <tbody>
+                <tr th:each="student : ${course.getStudentList()}">
+                  <td th:text="${student.getIndex()}"></td>
+                  <td th:text="${student.getUser().getName()}"></td>
+                  <td th:text="${student.getUser().getSurname()}"></td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <br>
+        <a href="/courses/create" class="btn btn-dark">Create</a>
+    </div>
+</main>
+</body>
+</html>

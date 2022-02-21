@@ -4,6 +4,7 @@ import mk.ukim.finki.gradingsystem.exceptions.ActivityNotFoundException;
 import mk.ukim.finki.gradingsystem.exceptions.CourseNotFoundException;
 import mk.ukim.finki.gradingsystem.model.Activity;
 import mk.ukim.finki.gradingsystem.model.Course;
+import mk.ukim.finki.gradingsystem.model.Student;
 import mk.ukim.finki.gradingsystem.repositoryJPA.ActivityRepositoryJPA;
 import mk.ukim.finki.gradingsystem.repositoryJPA.CourseRepositoryJPA;
 import mk.ukim.finki.gradingsystem.service.CourseService;
@@ -33,14 +34,14 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course create(String name, String year, List<Long> activities) {
+    public Course create(String name, String year, List<Long> activities, List<Long> studentList) {
         List<Activity> activityList = this.activityRepositoryJPA.findAllById(activities);
         Course course = new Course(name, year, activityList);
         return this.courseRepositoryJPA.save(course);
     }
 
     @Override
-    public Course edit(Long courseId, String name, String year, List<Long> activities) {
+    public Course edit(Long courseId, String name, String year, List<Long> activities, List<Long> studentList) {
         Course course = this.findById(courseId);
         List<Activity> activityList = this.activityRepositoryJPA.findAllById(activities);
 

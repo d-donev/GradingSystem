@@ -1,0 +1,51 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Graded students</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+</head>
+<body>
+
+
+<div class="container">
+    <form th:method="POST" th:action="@{'/courses/create/{id}' (id=${course?.getId()})}">
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" name="name" th:value="${course?.getName()}">
+        </div>
+
+        <div class="mb-3">
+            <label for="year" class="form-label">Year</label>
+            <select name="year" id="year" class="form-select">
+                <option selected>Select one or more options</option>
+                <option th:each="year : ${recentYears}" th:value="${year}" th:text="${year}"></option>
+                <option th:if="${course != null}" th:selected="${year == course.getYear()}" th:each="year : ${recentYears}" th:value="${year}" th:text="${year}"></option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="activityIdList" class="form-label">Activities</label>
+            <select name="activityIdList" id="activityIdList" class="form-select" multiple aria-label="multiple select example">
+                <option selected>Select one or more options</option>
+                <option th:each="activity : ${activities}" th:value="${activity.getCode()}" th:text="${activity.getName() + ' Min: ' + activity.getMinimum() + ' pts'}"></option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="studentIdList" class="form-label">Students</label>
+            <select name="studentIdList" id="studentIdList" class="form-select" multiple aria-label="multiple select example">
+                <option selected>Open this select menu</option>
+                <option th:each="student : ${students}" th:value="${student.getIndex()}" th:text="${student.getIndex() + ' ' + student.getUser().getName() + ' ' + student.getUser().getSurname()}"></option>
+            </select>
+        </div>
+
+
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+
+</body>
+</html>
