@@ -11,6 +11,7 @@ public interface StudentService {
     Student findById(Integer id);
     List<Student> listAll();
     Student create(Integer index, String name, String surname, Role role, Long courseId);
+    Student createManual(Integer index, String name, String surname, Role role, List<Long> courseId);
     Student edit(Integer index, String name, String surname, List<Long> courseId);
     Student deleteStudent(Integer index);
     Student addStudentToCourse(Integer index, Long courseId);

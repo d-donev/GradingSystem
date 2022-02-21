@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Students</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container">
+    <h1 class="m-5">Students</h1>
+    <table class="table table-stripped">
+        <tr>
+            <th>Index</th>
+            <th>Name</th>
+            <th>Surname</th>
+        </tr>
+        <tr th:each="student : ${students}">
+            <td th:text="${student.getIndex()}">Index</td>
+            <td th:text="${student.getUser().getName()}">Name</td>
+            <td th:text="${student.getUser().getSurname()}">Surname</td>
+            <td>
+                <form th:method="GET" th:action="@{'/students/{id}/edit' (id=${student.getIndex()})}">
+                    <button type="submit" class="btn btn-sm btn-dark">Edit</button>
+                </form>
+                <form th:method="DELETE" th:action="@{'/students/{id}/delete' (id=${student.getIndex()})}">
+                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+    <br>
+    <a href="/students/create" class="btn btn-dark">Create student</a>
+</div>
+</body>
+</html>

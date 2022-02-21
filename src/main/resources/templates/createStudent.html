@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create students</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container">
+    <h1 class="m-5" th:text="${student == null ? 'Create Student' : 'Edit Student'}"></h1>
+    <form th:method="POST" th:action="@{'/students/create/{id}' (id=${student?.getIndex()})}">
+        <div class="mb-3">
+            <label for="index" class="form-label">Index</label>
+            <input type="text"
+                   class="form-control"
+                   id="index"
+                   name="index"
+                   required
+                   th:value="${student?.getIndex()}">
+        </div>
+
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text"
+                   class="form-control"
+                   id="name"
+                   name="name"
+                   required
+                   th:value="${student?.getUser()?.getName()}">
+        </div>
+
+        <div class="mb-3">
+            <label for="surname" class="form-label">Surname</label>
+            <input type="text"
+                   class="form-control"
+                   id="surname"
+                   name="surname"
+                   required
+                   th:value="${student?.getUser()?.getSurname()}">
+        </div>
+
+        <div class="mb-3">
+            <input type="hidden" class="form-control" id="role" name="role" value="STUDENT">
+        </div>
+
+        <div class="mb-3">
+            <select name="courseIdList" class="form-select" multiple aria-label="multiple select example">
+                <option th:each="course : ${courses}" th:value="${course.getId()}"
+                        th:text="${course.getName() + '' + course.getYear()}"></option>
+                <option th:each="course : ${courses}" th:value="${course.getId()}"
+                        th:text="${course.getName() + '' + course.getYear()}"></option>
+            </select>
+        </div>
+        <div class="row">
+            <div class="col col-sm-4">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <a type="button" class="btn btn-primary" href="/students">Back</a>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
