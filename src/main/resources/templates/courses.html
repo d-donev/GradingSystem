@@ -1,0 +1,41 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Professors</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+</head>
+<body>
+<header>
+
+</header>
+<main>
+    <div class="container">
+        <h1>Courses</h1>
+        <table class="table table-stripped">
+            <thead>
+                <th>Name</th>
+                <th>Year</th>
+                <th></th>
+            </thead>
+            <tbody>
+                <tr th:each="course : ${courses}">
+                    <td>
+                        <a th:href="@{'/courses/{id}' (id=${course.getId()})}" th:text="${course.getName()}"></a>
+                    </td>
+                    <td th:text="${course.getYear()}"></td>
+                    <td>
+                        <form th:method="GET" th:action="@{'/courses/{id}/edit' (id=${course.getId()})}">
+                            <button type="submit" class="btn btn-primary">Edit</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <br>
+        <a href="/courses/create" class="btn btn-dark">Create</a>
+    </div>
+</main>
+</body>
+</html>
