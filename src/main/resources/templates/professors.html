@@ -10,18 +10,27 @@
 
 </header>
 <main>
-    <div class="container">
+    <div class="container m-5">
         <h1>Professors</h1>
         <table class="table table-stripped">
+            <thead>
+            <th>E-mail</th>
+            <th>Name</th>
+            <th>Surname</th>
+
+            </thead>
+            <tbody>
             <tr th:each="professor : ${professors}">
-                <th th:text="${professor.getEmail()}">Email</th>
-                <th th:text="${professor.getUser().getName()}">Name</th>
-                <th th:text="${professor.getUser().getSurname()}">Surname</th>
+                <td th:text="${professor.getEmail()}">Email</td>
+                <td th:text="${professor.getUser().getName()}">Name</td>
+                <td th:text="${professor.getUser().getSurname()}">Surname</td>
             </tr>
+            </tbody>
         </table>
         <br>
         <br>
         <a href="/teachers/create" class="btn btn-dark">Create</a>
+        <a href="/" class="btn btn-dark">BACK</a>
     </div>
 </main>
 </body>

@@ -18,4 +18,10 @@ public interface CourseService {
     Course delete(Long courseId);
 
     Course addActivityToCourse(Long courseId, Long activityId);
+
+    List<Student> filterStudentsInCourse(Long courseId, List<Student> studentList);
+
+    Course addStudentsToCourseManual(Long courseId, List<Integer> studentsId);
+
+    Course removeStudentFromCourse(Long courseId, Integer studentId);
 }

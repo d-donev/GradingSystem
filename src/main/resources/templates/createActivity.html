@@ -1,14 +1,15 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Graded students</title>
+    <title>Create Activity</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 
 </head>
 <body>
 
 
-<div class="container">
+<div class="container m-5">
+    <h1>Create activity</h1>
     <form th:method="POST" th:action="@{'/activity/create'}">
         <div class="mb-3">
             <label for="name" class="form-label">Name</label>
@@ -27,11 +28,9 @@
                    name="min"
                    required>
         </div>
-
-
         <button type="submit" class="btn btn-primary">Submit</button>
+        <a href="/activity" class="btn btn-dark">BACK</a>
     </form>
 </div>
-
 </body>
 </html>

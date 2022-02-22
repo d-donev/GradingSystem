@@ -89,7 +89,7 @@ public class CourseController {
         return "createCourse";
     }
 
-    @PostMapping("create/{id}")
+    @PostMapping("/create/{id}")
     public String editCourse(@PathVariable Long id,
                              @RequestParam String name,
                              @RequestParam String year,
@@ -97,5 +97,34 @@ public class CourseController {
                              @RequestParam List<Long> studentIdList) {
         courseService.edit(id,name, year, activityIdList, studentIdList);
         return "redirect:/courses";
+    }
+
+    @DeleteMapping("/{id}/delete")
+    public String deleteCourse(@PathVariable Long id) {
+        courseService.delete(id);
+        return "redirect:/courses";
+    }
+
+    @GetMapping("/addStudentsManual/{id}")
+    public String addStudentsManual(@PathVariable Long id, Model model) {
+        List<Student> studentList = studentService.listAll();
+        List<Student> students = courseService.filterStudentsInCourse(id, studentList);
+        model.addAttribute("course", courseService.findById(id));
+        model.addAttribute("students", students);
+        return "addStudentsManual";
+    }
+
+    @PostMapping("/addStudentsManual/{id}")
+    public String addStudentsManual(@PathVariable Long id,
+                                    @RequestParam List<Integer> studentsId) {
+        courseService.addStudentsToCourseManual(id, studentsId);
+        return "redirect:/courses/{id}";
+    }
+
+    @DeleteMapping("/removeStudentFromCourse/{id}")
+    public String removeStudentFromCourse(@PathVariable Integer id,
+                                          @RequestParam Long courseId) {
+        courseService.removeStudentFromCourse(courseId, id);
+        return "redirect:/courses/"+courseId;
     }
 }

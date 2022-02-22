@@ -1,14 +1,15 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Graded students</title>
+    <title>Create professor</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 
 </head>
 <body>
 
 
-<div class="container">
+<div class="container m-5">
+    <h1>Create professor</h1>
     <form th:method="POST" th:action="@{'/teachers/create'}">
         <div class="mb-3">
             <label for="email" class="form-label">Email address</label>
@@ -36,9 +37,8 @@
             </select>
         </div>
 
-
-
         <button type="submit" class="btn btn-primary">Submit</button>
+        <a href="/teachers" class="btn btn-dark">BACK</a>
     </form>
 </div>
 

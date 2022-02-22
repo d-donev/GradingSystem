@@ -1,0 +1,30 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Professors</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+</head>
+<body>
+<header>
+
+</header>
+<main>
+    <div class="container m-5">
+        <h1 th:text="${'Add students to ' + course.getName()}"></h1>
+        <form th:method="POST" th:action="@{'/courses/addStudentsManual/{id}' (id=${course.getId()})}">
+            <div class="mb-3">
+                <select name="studentsId" class="form-select" multiple aria-label="multiple select example">
+                    <option th:each="student : ${students}" th:value="${student.getIndex()}"
+                            th:text="${student.getIndex() + ' ' + student.getUser().getName() + ' ' + student.getUser().getSurname()}"></option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-dark">Submit</button>
+        </form>
+        <br>
+        <br>
+        <a href="/courses" class="btn btn-dark">BACK</a>
+    </div>
+</main>
+</body>
+</html>

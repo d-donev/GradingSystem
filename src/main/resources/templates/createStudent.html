@@ -6,7 +6,7 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 </head>
 <body>
-<div class="container">
+<div class="container m-5">
     <h1 class="m-5" th:text="${student == null ? 'Create Student' : 'Edit Student'}"></h1>
     <form th:method="POST" th:action="@{'/students/create/{id}' (id=${student?.getIndex()})}">
         <div class="mb-3">
@@ -43,18 +43,25 @@
             <input type="hidden" class="form-control" id="role" name="role" value="STUDENT">
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3" th:if="${student == null}">
             <select name="courseIdList" class="form-select" multiple aria-label="multiple select example">
-                <option th:each="course : ${courses}" th:value="${course.getId()}"
-                        th:text="${course.getName() + '' + course.getYear()}"></option>
                 <option th:each="course : ${courses}" th:value="${course.getId()}"
                         th:text="${course.getName() + '' + course.getYear()}"></option>
             </select>
         </div>
+
+        <div class="mb-3" th:if="${student != null}">
+            <h3>Student courses</h3>
+            <ul name="courseIdList" class="list-group">
+                <li class="list-group-item" th:each="course : ${courses}"
+                    th:text="${course.getName() + '' + course.getYear()}"></li>
+            </ul>
+        </div>
+
         <div class="row">
             <div class="col col-sm-4">
                 <button type="submit" class="btn btn-primary">Submit</button>
-                <a type="button" class="btn btn-primary" href="/students">Back</a>
+                <a type="button" class="btn btn-dark" href="/students">Back</a>
             </div>
         </div>
     </form>
