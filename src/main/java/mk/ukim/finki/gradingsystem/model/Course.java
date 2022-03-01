@@ -1,6 +1,8 @@
 package mk.ukim.finki.gradingsystem.model;
 
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.List;
@@ -18,6 +20,7 @@ public class Course {
     private String year;
 
     @ManyToMany
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Activity> activityList;
 
     @ManyToMany

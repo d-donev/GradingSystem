@@ -15,11 +15,15 @@
         <table class="table table-stripped">
             <thead>
             <th>Name</th>
+            <th>Course</th>
+            <th>Percentage</th>
             <th>Minimum</th>
             </thead>
             <tbody>
             <tr th:each="a : ${activities}">
                 <td th:text="${a.getName()}"></td>
+                <td th:text="${a.getCourse().name}"></td>
+                <td th:text="${a.getPercentage()}"></td>
                 <td th:text="${a.getMinimum()}"></td>
                 <td>
                     <form th:method="DELETE" th:action="@{'/activity/{id}/delete' (id=${a.getCode()})}">

@@ -24,6 +24,7 @@
                   <td th:text="${student.getIndex()}"></td>
                   <td th:text="${student.getUser().getName()}"></td>
                   <td th:text="${student.getUser().getSurname()}"></td>
+                  <td th:each="activity : ${course.getActivityList()}"></td>
                   <td>
                       <form th:method="DELETE" th:action="@{'/courses/removeStudentFromCourse/{id}' (id=${student.getIndex()})}">
                           <button class="btn btn-danger">Remove</button>
@@ -36,6 +37,7 @@
         <br>
         <br>
         <a th:href="@{'/courses/addStudentsManual/{id}' (id=${course.getId()})}" class="btn btn-dark">Add student to course</a>
+        <a th:href="@{'/activity/create/{id}' (id=${course.getId()})}" class="btn btn-dark">Add activity</a>
         <a href="/courses" class="btn btn-dark">BACK</a>
     </div>
 </main>

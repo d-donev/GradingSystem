@@ -1,7 +1,9 @@
 package mk.ukim.finki.gradingsystem.web;
 
 import mk.ukim.finki.gradingsystem.model.Activity;
+import mk.ukim.finki.gradingsystem.model.Course;
 import mk.ukim.finki.gradingsystem.service.ActivityService;
+import mk.ukim.finki.gradingsystem.service.CourseService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +15,11 @@ import java.util.List;
 public class ActivityController {
 
     private final ActivityService activityService;
+    private final CourseService courseService;
 
-    public ActivityController(ActivityService activityService) {
+    public ActivityController(ActivityService activityService, CourseService courseService) {
         this.activityService = activityService;
+        this.courseService = courseService;
     }
 
     @GetMapping
@@ -26,26 +30,31 @@ public class ActivityController {
         return "activities";
     }
 
-    @GetMapping("/create")
-    public String getCreateActivityPage(Model model) {
+    @GetMapping("/create/{id}")
+    public String getCreateActivityPage(Model model, @PathVariable Long id) {
 
         List<Activity> activities = activityService.listAll();
+        Course course = courseService.findById(id);
+
         model.addAttribute("activities", activities);
+        model.addAttribute("course",course);
 
         return "createActivity";
     }
 
-    @PostMapping("/create")
+    @PostMapping("/create/{id}")
     public String createActivity(@RequestParam String name,
+                                 @PathVariable Long id,
+                                 @RequestParam Double percentage,
                                  @RequestParam Double min) {
 
-        activityService.create(name,min);
-        return "redirect:/activity";
+        Course course = courseService.findById(id);
+        activityService.create(name,course,percentage,min);
+        return "redirect:/courses/{id}";
     }
 
     @DeleteMapping("/{id}/delete")
     public String deleteActivity(@PathVariable Long id) {
-
         activityService.delete(id);
         return "redirect:/activity";
     }

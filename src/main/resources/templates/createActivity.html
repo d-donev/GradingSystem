@@ -9,14 +9,24 @@
 
 
 <div class="container m-5">
-    <h1>Create activity</h1>
-    <form th:method="POST" th:action="@{'/activity/create'}">
+    <h1>Create activity for <span th:text="${course.getName()}"></span></h1>
+    <form th:method="POST" th:action="@{'/activity/create/{id}' (id=${course.getId()})}">
         <div class="mb-3">
             <label for="name" class="form-label">Name</label>
             <input type="text"
                    class="form-control"
                    id="name"
                    name="name"
+                   required>
+        </div>
+
+
+        <div class="mb-3">
+            <label for="percentage" class="form-label">Percentage</label>
+            <input type="text"
+                   class="form-control"
+                   id="percentage"
+                   name="percentage"
                    required>
         </div>
 
