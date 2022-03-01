@@ -18,9 +18,9 @@
             <th>Points</th>
             </thead>
             <tbody>
-            <tr>
-                <td></td>
-                <td></td>
+            <tr th:if="${activity.getCode().equals(point.getCode())}" th:each="point : ${points}">
+                <td th:text="${point.getIndex()}"></td>
+                <td th:text="${point.getPoints()}"></td>
             </tr>
             </tbody>
         </table>

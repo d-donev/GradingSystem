@@ -2,6 +2,7 @@ package mk.ukim.finki.gradingsystem.web;
 
 import mk.ukim.finki.gradingsystem.model.Activity;
 import mk.ukim.finki.gradingsystem.model.Course;
+import mk.ukim.finki.gradingsystem.model.StudentActivityPoints;
 import mk.ukim.finki.gradingsystem.service.ActivityService;
 import mk.ukim.finki.gradingsystem.service.StudentActivityPointsService;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/points")
@@ -25,7 +28,10 @@ public class StudentActivityPointsController {
     @GetMapping("/{id}")
     public String getPointsPage(@PathVariable Long id, Model model) {
         Activity activity = activityService.findById(id);
+        List<StudentActivityPoints> studentActivityPoints = studentActivityPointsService.findAll();
+
         model.addAttribute("activity", activity);
+        model.addAttribute("points",studentActivityPoints);
         return "points";
     }
 }
