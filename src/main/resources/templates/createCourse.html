@@ -26,14 +26,6 @@
         </div>
 
         <div class="mb-3">
-            <label for="activityIdList" class="form-label">Activities</label>
-            <select name="activityIdList" id="activityIdList" class="form-select" multiple aria-label="multiple select example">
-                <option selected>Select one or more options</option>
-                <option th:each="activity : ${activities}" th:value="${activity.getCode()}" th:text="${activity.getName() + ' Min: ' + activity.getMinimum() + ' pts'}"></option>
-            </select>
-        </div>
-
-        <div class="mb-3">
             <label for="studentIdList" class="form-label">Students</label>
             <select name="studentIdList" id="studentIdList" class="form-select" multiple aria-label="multiple select example">
                 <option selected>Open this select menu</option>

@@ -65,9 +65,8 @@ public class CourseController {
     @PostMapping("/create")
     public String createCourse(@RequestParam String name,
                                @RequestParam String year,
-                               @RequestParam List<Long> activityIdList,
                                @RequestParam List<Long> studentIdList) {
-        courseService.create(name, year, activityIdList, studentIdList);
+        courseService.create(name, year, studentIdList);
         return "redirect:/courses";
     }
 

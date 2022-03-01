@@ -14,29 +14,33 @@
         <h1 th:text="${course.getName()}"></h1>
         <table class="table table-stripped">
             <thead>
-              <th>Index</th>
-              <th>Name</th>
-              <th>Surname</th>
-              <th th:each="activity : ${course.getActivityList()}" th:text="${activity.getName()}"></th>
+            <th>Index</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th th:each="activity : ${course.getActivityList()}">
+                <a th:href="@{'/points/{id}' (id=${activity.getCode()})}" th:text="${activity.getName()}"></a>
+            </th>
             </thead>
             <tbody>
-                <tr th:each="student : ${course.getStudentList()}">
-                  <td th:text="${student.getIndex()}"></td>
-                  <td th:text="${student.getUser().getName()}"></td>
-                  <td th:text="${student.getUser().getSurname()}"></td>
-                  <td th:each="activity : ${course.getActivityList()}"></td>
-                  <td>
-                      <form th:method="DELETE" th:action="@{'/courses/removeStudentFromCourse/{id}' (id=${student.getIndex()})}">
-                          <button class="btn btn-danger">Remove</button>
-                          <input type="hidden" name="courseId" th:value="${course.getId()}">
-                      </form>
-                  </td>
-                </tr>
+            <tr th:each="student : ${course.getStudentList()}">
+                <td th:text="${student.getIndex()}"></td>
+                <td th:text="${student.getUser().getName()}"></td>
+                <td th:text="${student.getUser().getSurname()}"></td>
+                <td th:each="activity : ${course.getActivityList()}"></td>
+                <td>
+                    <form th:method="DELETE"
+                          th:action="@{'/courses/removeStudentFromCourse/{id}' (id=${student.getIndex()})}">
+                        <button class="btn btn-danger">Remove</button>
+                        <input type="hidden" name="courseId" th:value="${course.getId()}">
+                    </form>
+                </td>
+            </tr>
             </tbody>
         </table>
         <br>
         <br>
-        <a th:href="@{'/courses/addStudentsManual/{id}' (id=${course.getId()})}" class="btn btn-dark">Add student to course</a>
+        <a th:href="@{'/courses/addStudentsManual/{id}' (id=${course.getId()})}" class="btn btn-dark">Add student to
+            course</a>
         <a th:href="@{'/activity/create/{id}' (id=${course.getId()})}" class="btn btn-dark">Add activity</a>
         <a href="/courses" class="btn btn-dark">BACK</a>
     </div>

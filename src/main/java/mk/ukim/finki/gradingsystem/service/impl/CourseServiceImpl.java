@@ -38,8 +38,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course create(String name, String year, List<Long> activities, List<Long> studentList) {
-        List<Activity> activityList = this.activityRepositoryJPA.findAllById(activities);
+    public Course create(String name, String year, List<Long> studentList) {
+        List<Activity> activityList = new ArrayList<>();
         Course course = new Course(name, year, activityList);
         return this.courseRepositoryJPA.save(course);
     }

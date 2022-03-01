@@ -11,7 +11,7 @@ public interface CourseService {
 
     List<Course> listAll();
 
-    Course create(String name, String year, List<Long> activities, List<Long> studentList);
+    Course create(String name, String year, List<Long> studentList);
 
     Course edit(Long courseId, String name, String year, List<Long> activities, List<Long> studentList);
 
