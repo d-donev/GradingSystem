@@ -4,6 +4,13 @@
     <title>Points</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 
+    <script>
+        function getFilePath() {
+            let filePath = document.getElementById("fileUpload").value;
+            //var path = (window.URL || window.webkitURL).createObjectURL(filePath);
+            alert(filePath);
+        }
+    </script>
 </head>
 <body>
 <header>
@@ -11,16 +18,28 @@
 </header>
 <main>
     <div class="container m-5">
+        <div class="row">
+            <form th:method="GET" th:action="@{'/points/import/{id}' (id=${activity.getCode()})}">
+                <input type="file" name="path" class="btn btn-success">
+                <button type="submit" class="btn btn-info">Import</button>
+            </form>
+        </div>
         <h1 th:text="${activity.getName()}"></h1>
         <table class="table table-stripped">
             <thead>
             <th>Index</th>
             <th>Points</th>
+            <th></th>
             </thead>
             <tbody>
             <tr th:if="${activity.getCode().equals(point.getCode())}" th:each="point : ${points}">
                 <td th:text="${point.getIndex()}"></td>
                 <td th:text="${point.getPoints()}"></td>
+                <td>
+                    <form>
+                        <button type="submit" class="btn btn-primary">Edit points</button>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>

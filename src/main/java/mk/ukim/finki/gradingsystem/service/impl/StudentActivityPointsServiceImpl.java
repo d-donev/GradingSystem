@@ -20,4 +20,9 @@ public class StudentActivityPointsServiceImpl implements StudentActivityPointsSe
     public List<StudentActivityPoints> findAll() {
         return studentActivityPointsRepositoryJPA.findAll();
     }
+
+    @Override
+    public List<StudentActivityPoints> saveAll(List<StudentActivityPoints> listStudents) {
+        return this.studentActivityPointsRepositoryJPA.saveAll(listStudents);
+    }
 }

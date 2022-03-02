@@ -1,5 +1,6 @@
 package mk.ukim.finki.gradingsystem.web;
 
+import mk.ukim.finki.gradingsystem.excel.PointsExcelImporter;
 import mk.ukim.finki.gradingsystem.model.Activity;
 import mk.ukim.finki.gradingsystem.model.Course;
 import mk.ukim.finki.gradingsystem.model.StudentActivityPoints;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -31,7 +33,15 @@ public class StudentActivityPointsController {
         List<StudentActivityPoints> studentActivityPoints = studentActivityPointsService.findAll();
 
         model.addAttribute("activity", activity);
-        model.addAttribute("points",studentActivityPoints);
+        model.addAttribute("points", studentActivityPoints);
         return "points";
+    }
+
+    @GetMapping("/import/{id}")
+    public String importFile(@PathVariable Long id, @RequestParam String path) {
+        PointsExcelImporter excelImporter = new PointsExcelImporter();
+        List<StudentActivityPoints> listStudent = excelImporter.excelImport(id, path);
+        studentActivityPointsService.saveAll(listStudent);
+        return "redirect:/points/{id}";
     }
 }

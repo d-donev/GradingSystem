@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface StudentActivityPointsService {
     List<StudentActivityPoints> findAll();
+    List<StudentActivityPoints> saveAll(List<StudentActivityPoints> listStudents);
 }
