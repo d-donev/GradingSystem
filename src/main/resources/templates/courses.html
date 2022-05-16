@@ -7,36 +7,70 @@
 </head>
 <body>
 <header>
+    <div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">HOME</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/courses">Courses</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/teachers">Professors</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/students">Students</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/activity">Activities</a>
+                        </li>
 
+                    </ul>
+                    <form class="d-flex">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </div>
 </header>
 <main>
-    <div class="container m-5">
-        <h1>Courses</h1>
-        <table class="table table-stripped">
-            <thead>
-                <th>Name</th>
-                <th>Year</th>
-                <th></th>
-            </thead>
-            <tbody>
-                <tr th:each="course : ${courses}">
-                    <td>
-                        <a th:href="@{'/courses/{id}' (id=${course.getId()})}" th:text="${course.getName()}"></a>
-                    </td>
-                    <td th:text="${course.getYear()}"></td>
-                    <td>
-                        <form th:method="GET" th:action="@{'/courses/{id}/edit' (id=${course.getId()})}">
-                            <button type="submit" class="btn btn-primary">Edit</button>
-                        </form>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <br>
-        <br>
-        <a href="/courses/create" class="btn btn-dark">Create</a>
-        <a href="/" class="btn btn-dark">BACK</a>
+    <div class="container mt-3 h-100">
+        <div class="row">
+            <div class="col text-end">
+                <a href="/courses/create" class="btn btn-success mb-3">Create</a>
+                <a href="/" class="btn btn-dark mb-3">BACK</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-4" th:each="course : ${courses}">
+                <div class="card rounded mb-4" style="width: 80%; height: 15rem; border-radius: 10px;">
+                    <div style="background-color: lightblue; height: 15%;" class="card-img-top"></div>
+                    <div class="card-body mt-auto">
+                        <h3 class="card-title" th:text="${course.name}"></h3>
+                        <h5 class="card-text" th:text="${course.year}"></h5>
+                    </div>
+                    <div class="card-footer">
+                        <a th:href="@{'/courses/{id}' (id=${course.getId()})}" class="btn btn-primary">View Course</a>
+                        <a th:href="@{'/courses/{id}/edit/' (id=${course.getId()})}" class="btn btn-primary">Edit Course</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </main>
+<footer class="bg-light text-center text-lg-start">
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2022 Copyright:
+        <a class="text-dark" href="#">Grading System</a>
+    </div>
+</footer>
 </body>
 </html>

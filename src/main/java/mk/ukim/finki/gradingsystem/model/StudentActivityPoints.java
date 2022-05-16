@@ -14,7 +14,7 @@ public class StudentActivityPoints {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    
     private Integer index;
 
     private Long code;

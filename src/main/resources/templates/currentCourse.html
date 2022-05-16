@@ -30,7 +30,7 @@
                 <td>
                     <form th:method="DELETE"
                           th:action="@{'/courses/removeStudentFromCourse/{id}' (id=${student.getIndex()})}">
-                        <button class="btn btn-danger">Remove</button>
+                        <button class="btn btn-outline-danger btn-sm">Remove</button>
                         <input type="hidden" name="courseId" th:value="${course.getId()}">
                     </form>
                 </td>

@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import mk.ukim.finki.gradingsystem.model.StudentActivityPoints;
+import mk.ukim.finki.gradingsystem.service.CourseService;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -16,11 +17,15 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class PointsExcelImporter {
     public List<StudentActivityPoints> excelImport(Long code, String path) {
         List<StudentActivityPoints> listStudent = new ArrayList<>();
+        CourseService courseService;
 
         int index = 0;
-        double points = 0;
+        double Tpoints = 0;
+        double Ppoints = 0;
+        String name = "";
+        String surname = "";
         System.out.println(path);
-        String excelFilePath = "C:\\Users\\User\\Desktop\\info project\\Web Project\\" + path;
+        String excelFilePath = "C:\\Users\\User.DESKTOP-9R41TC1\\Desktop\\" + path;
         //static only
 
         long start = System.currentTimeMillis();
@@ -44,12 +49,17 @@ public class PointsExcelImporter {
                             index = (int) nextCell.getNumericCellValue();
                             break;
                         case 1:
-                            points = nextCell.getNumericCellValue();
-                            System.out.println(points);
+                            Ppoints = nextCell.getNumericCellValue();
+                            System.out.println(Ppoints);
                             break;
                     }
                 }
-                listStudent.add(new StudentActivityPoints(index, code, points));
+                List<Integer> list = new ArrayList<>();
+                list.add(index);
+                //courseService.addStudentsToCourseManual(courseId,list);
+                //listStudent.add(new StudentActivityPoints(index, code, Tpoints));
+                listStudent.add(new StudentActivityPoints(index, code, Ppoints));
+                list.clear();
             }
 
             workbook.close();
@@ -62,6 +72,9 @@ public class PointsExcelImporter {
             e.printStackTrace();
         }
         System.out.println(listStudent);
+
+
+
         return listStudent;
     }
 

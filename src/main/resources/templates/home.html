@@ -4,6 +4,7 @@
     <title>Home</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="../static/css/style/style.css">
 
 
 </head>
@@ -12,7 +13,7 @@
     <div >
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">HOME</a>
+                <a class="navbar-brand" href="/">HOME</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -43,12 +44,30 @@
         </nav>
     </div>
 </header>
-<main>
+<main class="h-100">
 
-    <div>
-<h1 id="test">GRADING SYSTEM</h1>
+    <div class="d-flex align-items-center justify-content-center row" style="position: relative">
+        <div class="row text-center">
+            <div class="col">
+                <h1 class="animateCharcter"> GRADING SYSTEM</h1>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col col-md-6 col-sm-12 mb-4">
+                <a href="/courses" class="btn btn-lg btn-success">Go to courses</a>
+            </div>
+            <div class="col col-md-6 col-sm-12 mb-4">
+                <a href="/students" class="btn btn-lg btn-success">View All Students</a>
+            </div>
+        </div>
     </div>
 
 </main>
+<footer class="bg-light text-center text-lg-start">
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2022 Copyright:
+        <a class="text-dark" href="#">Grading System</a>
+    </div>
+</footer>
 </body>
 </html>
