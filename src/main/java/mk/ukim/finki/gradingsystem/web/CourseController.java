@@ -5,6 +5,7 @@ import mk.ukim.finki.gradingsystem.model.Course;
 import mk.ukim.finki.gradingsystem.model.Student;
 import mk.ukim.finki.gradingsystem.service.ActivityService;
 import mk.ukim.finki.gradingsystem.service.CourseService;
+import mk.ukim.finki.gradingsystem.service.StudentActivityPointsService;
 import mk.ukim.finki.gradingsystem.service.StudentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,11 +22,13 @@ public class CourseController {
     private final CourseService courseService;
     private final ActivityService activityService;
     private final StudentService studentService;
+    private final StudentActivityPointsService studentActivityPointsService;
 
-    public CourseController(CourseService courseService, ActivityService activityService, StudentService studentService) {
+    public CourseController(CourseService courseService, ActivityService activityService, StudentService studentService, StudentActivityPointsService studentActivityPointsService) {
         this.courseService = courseService;
         this.activityService = activityService;
         this.studentService = studentService;
+        this.studentActivityPointsService = studentActivityPointsService;
     }
 
     @GetMapping
@@ -40,9 +43,14 @@ public class CourseController {
         Course course = courseService.findById(id);
         List<Activity> activityList = course.getActivityList();
         List<Student> studentList = course.getStudentList();
+        boolean flagTrue = true;
+        boolean flagFalse = false;
         model.addAttribute("course", course);
         model.addAttribute("activities", activityList);
         model.addAttribute("students", studentList);
+        model.addAttribute("studentPoints", studentActivityPointsService.findAll());
+        model.addAttribute("flagTrue", flagTrue);
+        model.addAttribute("flagFalse", flagFalse);
         return "currentCourse";
     }
 

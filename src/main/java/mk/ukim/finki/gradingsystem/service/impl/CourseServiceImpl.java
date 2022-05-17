@@ -5,14 +5,18 @@ import mk.ukim.finki.gradingsystem.exceptions.CourseNotFoundException;
 import mk.ukim.finki.gradingsystem.model.Activity;
 import mk.ukim.finki.gradingsystem.model.Course;
 import mk.ukim.finki.gradingsystem.model.Student;
+import mk.ukim.finki.gradingsystem.model.StudentActivityPoints;
 import mk.ukim.finki.gradingsystem.repositoryJPA.ActivityRepositoryJPA;
 import mk.ukim.finki.gradingsystem.repositoryJPA.CourseRepositoryJPA;
+import mk.ukim.finki.gradingsystem.repositoryJPA.StudentActivityPointsRepositoryJPA;
 import mk.ukim.finki.gradingsystem.repositoryJPA.StudentRepositoryJPA;
 import mk.ukim.finki.gradingsystem.service.CourseService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CourseServiceImpl implements CourseService {
@@ -20,11 +24,36 @@ public class CourseServiceImpl implements CourseService {
     private final CourseRepositoryJPA courseRepositoryJPA;
     private final ActivityRepositoryJPA activityRepositoryJPA;
     private final StudentRepositoryJPA studentRepositoryJPA;
+    private final StudentActivityPointsRepositoryJPA studentActivityPointsRepositoryJPA;
 
-    public CourseServiceImpl(CourseRepositoryJPA courseRepositoryJPA, ActivityRepositoryJPA activityRepositoryJPA, StudentRepositoryJPA studentRepositoryJPA) {
+    public CourseServiceImpl(CourseRepositoryJPA courseRepositoryJPA, ActivityRepositoryJPA activityRepositoryJPA, StudentRepositoryJPA studentRepositoryJPA, StudentActivityPointsRepositoryJPA studentActivityPointsRepositoryJPA) {
         this.courseRepositoryJPA = courseRepositoryJPA;
         this.activityRepositoryJPA = activityRepositoryJPA;
         this.studentRepositoryJPA = studentRepositoryJPA;
+        this.studentActivityPointsRepositoryJPA = studentActivityPointsRepositoryJPA;
+    }
+
+    @Override
+    public List<StudentActivityPoints> getPoints(Long activityId)
+    {
+        Long courseId = activityRepositoryJPA.findById(activityId).get().getCourse().getId();
+        List<Activity> courseActivities = courseRepositoryJPA.findById(courseId).get().getActivityList();
+        Activity courseActivity = courseActivities.stream().filter(x -> x.getCode().equals(activityId)).findFirst().orElse(null);
+        Course course = courseRepositoryJPA.findById(courseId).orElse(null);
+        Integer numCourses = course.getStudentList().size();
+//        Integer numPoints = activityRepositoryJPA.findById(activityId)
+        List<StudentActivityPoints> students = studentActivityPointsRepositoryJPA.findAll().stream()
+                .filter(x -> x.getCode().equals(activityId)).collect(Collectors.toList());
+
+//        for (int i=0;i<course.getStudentList().size();i++) {
+//            for (int j=0;j<students.size();j++) {
+//                if (course.getStudentList().get(i).getIndex().equals(students.get(j).getIndex())) {
+//                     courseActivities.
+//                }
+//            }
+//        }
+
+        return null;
     }
 
     @Override

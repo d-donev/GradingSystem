@@ -3,7 +3,11 @@
     <meta charset="UTF-8"/>
     <title>Professors</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <script>
+        function checkFlag() {
 
+        }
+    </script>
 </head>
 <body>
 <header>
@@ -20,13 +24,27 @@
             <th th:each="activity : ${course.getActivityList()}">
                 <a th:href="@{'/points/{id}' (id=${activity.getCode()})}" th:text="${activity.getName()}"></a>
             </th>
+            <th></th>
+            <th></th>
+            <th></th>
             </thead>
             <tbody>
             <tr th:each="student : ${course.getStudentList()}">
                 <td th:text="${student.getIndex()}"></td>
                 <td th:text="${student.getUser().getName()}"></td>
                 <td th:text="${student.getUser().getSurname()}"></td>
-                <td th:each="activity : ${course.getActivityList()}"></td>
+                <div th:each="activity: ${activities}">
+
+                    <div th:each="points : ${studentPoints}">
+                        <div th:if="${points.getIndex() == student.getIndex() && points.getCode() == activity.getCode()}">
+                            <td th:text="${points.getPoints()}"></td>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
                 <td>
                     <form th:method="DELETE"
                           th:action="@{'/courses/removeStudentFromCourse/{id}' (id=${student.getIndex()})}">

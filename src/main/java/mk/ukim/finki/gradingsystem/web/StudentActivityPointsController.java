@@ -2,9 +2,9 @@ package mk.ukim.finki.gradingsystem.web;
 
 import mk.ukim.finki.gradingsystem.excel.PointsExcelImporter;
 import mk.ukim.finki.gradingsystem.model.Activity;
-import mk.ukim.finki.gradingsystem.model.Course;
 import mk.ukim.finki.gradingsystem.model.StudentActivityPoints;
 import mk.ukim.finki.gradingsystem.service.ActivityService;
+import mk.ukim.finki.gradingsystem.service.CourseService;
 import mk.ukim.finki.gradingsystem.service.StudentActivityPointsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,17 +21,18 @@ public class StudentActivityPointsController {
 
     private final StudentActivityPointsService studentActivityPointsService;
     private final ActivityService activityService;
+    private final CourseService courseService;
 
-    public StudentActivityPointsController(StudentActivityPointsService studentActivityPointsService, ActivityService activityService) {
+    public StudentActivityPointsController(StudentActivityPointsService studentActivityPointsService, ActivityService activityService, CourseService courseService) {
         this.studentActivityPointsService = studentActivityPointsService;
         this.activityService = activityService;
+        this.courseService = courseService;
     }
 
     @GetMapping("/{id}")
     public String getPointsPage(@PathVariable Long id, Model model) {
         Activity activity = activityService.findById(id);
         List<StudentActivityPoints> studentActivityPoints = studentActivityPointsService.findAll();
-
         model.addAttribute("activity", activity);
         model.addAttribute("points", studentActivityPoints);
         return "points";

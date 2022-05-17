@@ -3,6 +3,7 @@ package mk.ukim.finki.gradingsystem.service;
 import mk.ukim.finki.gradingsystem.model.Activity;
 import mk.ukim.finki.gradingsystem.model.Course;
 import mk.ukim.finki.gradingsystem.model.Student;
+import mk.ukim.finki.gradingsystem.model.StudentActivityPoints;
 
 import java.util.List;
 
@@ -24,4 +25,5 @@ public interface CourseService {
     Course addStudentsToCourseManual(Long courseId, List<Integer> studentsId);
 
     Course removeStudentFromCourse(Long courseId, Integer studentId);
+    List<StudentActivityPoints> getPoints(Long activityid);
 }
