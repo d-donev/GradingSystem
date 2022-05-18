@@ -3,11 +3,62 @@
     <meta charset="UTF-8"/>
     <title>Professors</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-
+    <!-- Font Awesome -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+            rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+            rel="stylesheet"
+    />
+    <!-- MDB -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.0.0/mdb.min.css"
+            rel="stylesheet"
+    />
+    <!-- MDB -->
+    <script
+            type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.0.0/mdb.min.js"
+    ></script>
 </head>
 <body>
 <header>
+    <div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="/">HOME</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/courses">Courses</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/teachers">Professors</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/students">Students</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/activity">Activities</a>
+                        </li>
 
+                    </ul>
+                    <form class="d-flex">
+                        <button class="btn btn-outline-success me-2" type="submit">Login</button>
+                        <button class="btn btn-outline-primary" type="submit">Register</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </div>
 </header>
 <main>
     <div class="container m-5">
@@ -18,6 +69,7 @@
             <th>Course</th>
             <th>Percentage</th>
             <th>Minimum</th>
+            <th></th>
             </thead>
             <tbody>
             <tr th:each="a : ${activities}">
@@ -39,5 +91,11 @@
         <a href="/" class="btn btn-dark">BACK</a>
     </div>
 </main>
+<footer class="bg-light text-center text-lg-start bottom-0 w-100">
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2022 Copyright:
+        <a class="text-dark" href="#">Grading System</a>
+    </div>
+</footer>
 </body>
 </html>

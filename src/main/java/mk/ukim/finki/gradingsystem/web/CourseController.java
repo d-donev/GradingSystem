@@ -32,9 +32,36 @@ public class CourseController {
     }
 
     @GetMapping
-    public String getCoursesPage(Model model) {
-        List<Course> courses = courseService.listAll();
+    public String getCoursesPage(@RequestParam(required = false) String year,
+                                 @RequestParam(required = false) String searchText,
+                                 Model model) {
+        List<Course> courses = new ArrayList<>();
+        List<Course> allCourses = this.courseService.listAll();
+        if(year != null && !year.equals("---")) {
+            courses = this.courseService.filterCoursesByYear(year);
+        }
+        else if(searchText != null && searchText != "") {
+            courses = this.courseService.filterCoursesBySearch(searchText);
+        }
+        else {
+            courses = courseService.listAll();
+        }
+        List<String> years = new ArrayList<>();
+        boolean flag = false;
+        for(int i=0; i<allCourses.size(); i++) {
+            for(int j=0; j<years.size(); j++) {
+                if(allCourses.get(i).getYear().equals(years.get(j))) {
+                    flag = true;
+                    break;
+                }
+            }
+            if(!flag) {
+                years.add(allCourses.get(i).getYear());
+            }
+            flag = false;
+        }
         model.addAttribute("courses", courses);
+        model.addAttribute("years", years);
         return "courses";
     }
 

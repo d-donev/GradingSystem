@@ -67,6 +67,16 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    public List<Course> filterCoursesByYear(String year) {
+        return this.courseRepositoryJPA.findAll().stream().filter(x -> x.getYear().equals(year)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Course> filterCoursesBySearch(String searchText) {
+        return this.courseRepositoryJPA.findAll().stream().filter(x -> x.getName().toLowerCase().contains(searchText.toLowerCase())).collect(Collectors.toList());
+    }
+
+    @Override
     public Course create(String name, String year, List<Long> studentList) {
         List<Activity> activityList = new ArrayList<>();
         Course course = new Course(name, year, activityList);

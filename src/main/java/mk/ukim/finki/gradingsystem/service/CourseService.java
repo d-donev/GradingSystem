@@ -12,6 +12,10 @@ public interface CourseService {
 
     List<Course> listAll();
 
+    List<Course> filterCoursesByYear(String year);
+
+    List<Course> filterCoursesBySearch(String searchText);
+
     Course create(String name, String year, List<Long> studentList);
 
     Course edit(Long courseId, String name, String year, List<Long> activities, List<Long> studentList);
@@ -25,5 +29,6 @@ public interface CourseService {
     Course addStudentsToCourseManual(Long courseId, List<Integer> studentsId);
 
     Course removeStudentFromCourse(Long courseId, Integer studentId);
+
     List<StudentActivityPoints> getPoints(Long activityid);
 }
