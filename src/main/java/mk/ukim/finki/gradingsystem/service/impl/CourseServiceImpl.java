@@ -2,20 +2,13 @@ package mk.ukim.finki.gradingsystem.service.impl;
 
 import mk.ukim.finki.gradingsystem.exceptions.ActivityNotFoundException;
 import mk.ukim.finki.gradingsystem.exceptions.CourseNotFoundException;
-import mk.ukim.finki.gradingsystem.model.Activity;
-import mk.ukim.finki.gradingsystem.model.Course;
-import mk.ukim.finki.gradingsystem.model.Student;
-import mk.ukim.finki.gradingsystem.model.StudentActivityPoints;
-import mk.ukim.finki.gradingsystem.repositoryJPA.ActivityRepositoryJPA;
-import mk.ukim.finki.gradingsystem.repositoryJPA.CourseRepositoryJPA;
-import mk.ukim.finki.gradingsystem.repositoryJPA.StudentActivityPointsRepositoryJPA;
-import mk.ukim.finki.gradingsystem.repositoryJPA.StudentRepositoryJPA;
+import mk.ukim.finki.gradingsystem.model.*;
+import mk.ukim.finki.gradingsystem.repositoryJPA.*;
 import mk.ukim.finki.gradingsystem.service.CourseService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,12 +18,14 @@ public class CourseServiceImpl implements CourseService {
     private final ActivityRepositoryJPA activityRepositoryJPA;
     private final StudentRepositoryJPA studentRepositoryJPA;
     private final StudentActivityPointsRepositoryJPA studentActivityPointsRepositoryJPA;
+    private final GradesRepositoryJPA gradesRepositoryJPA;
 
-    public CourseServiceImpl(CourseRepositoryJPA courseRepositoryJPA, ActivityRepositoryJPA activityRepositoryJPA, StudentRepositoryJPA studentRepositoryJPA, StudentActivityPointsRepositoryJPA studentActivityPointsRepositoryJPA) {
+    public CourseServiceImpl(CourseRepositoryJPA courseRepositoryJPA, ActivityRepositoryJPA activityRepositoryJPA, StudentRepositoryJPA studentRepositoryJPA, StudentActivityPointsRepositoryJPA studentActivityPointsRepositoryJPA, GradesRepositoryJPA gradesRepositoryJPA) {
         this.courseRepositoryJPA = courseRepositoryJPA;
         this.activityRepositoryJPA = activityRepositoryJPA;
         this.studentRepositoryJPA = studentRepositoryJPA;
         this.studentActivityPointsRepositoryJPA = studentActivityPointsRepositoryJPA;
+        this.gradesRepositoryJPA = gradesRepositoryJPA;
     }
 
     @Override
@@ -134,6 +129,9 @@ public class CourseServiceImpl implements CourseService {
         List<Student> studentList = studentRepositoryJPA.findAllById(studentsId);
         for(int i=0; i<studentList.size(); i++) {
             c.getStudentList().add(studentList.get(i));
+            Grades g = new Grades(studentList.get(i).getIndex(), courseId, 0.0, 5);
+            studentList.get(i).getGrades().add(g);
+            gradesRepositoryJPA.save(g);
         }
         return courseRepositoryJPA.save(c);
     }
@@ -141,7 +139,11 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Course removeStudentFromCourse(Long courseId, Integer studentId) {
         Course c = this.findById(courseId);
+        Student s = this.studentRepositoryJPA.getById(studentId);
+        Grades g = gradesRepositoryJPA.findAll().stream().filter(x -> x.getCourseId().equals(courseId) && x.getIndex().equals(studentId)).findFirst().orElse(null);
         c.getStudentList().removeIf(x -> x.getIndex().equals(studentId));
+        s.getGrades().remove(g);
+        gradesRepositoryJPA.delete(g);
         return courseRepositoryJPA.save(c);
     }
 }

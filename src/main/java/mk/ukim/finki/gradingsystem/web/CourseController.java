@@ -70,14 +70,10 @@ public class CourseController {
         Course course = courseService.findById(id);
         List<Activity> activityList = course.getActivityList();
         List<Student> studentList = course.getStudentList();
-        boolean flagTrue = true;
-        boolean flagFalse = false;
         model.addAttribute("course", course);
         model.addAttribute("activities", activityList);
         model.addAttribute("students", studentList);
         model.addAttribute("studentPoints", studentActivityPointsService.findAll());
-        model.addAttribute("flagTrue", flagTrue);
-        model.addAttribute("flagFalse", flagFalse);
         return "currentCourse";
     }
 
