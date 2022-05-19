@@ -25,4 +25,22 @@ public class StudentActivityPointsServiceImpl implements StudentActivityPointsSe
     public List<StudentActivityPoints> saveAll(List<StudentActivityPoints> listStudents) {
         return this.studentActivityPointsRepositoryJPA.saveAll(listStudents);
     }
+
+    @Override
+    public List<StudentActivityPoints> filterDuplicates(List<StudentActivityPoints> studentActivityPoints) {
+
+        List<StudentActivityPoints> allStudentActivityPoints = studentActivityPointsRepositoryJPA.findAll();
+
+        for (int i=0; i<allStudentActivityPoints.size();i++) {
+            for (int j=0;j<studentActivityPoints.size();j++) {
+                if (allStudentActivityPoints.get(i).getIndex().equals(studentActivityPoints.get(j).getIndex()) &&
+                    allStudentActivityPoints.get(i).getCode().equals(studentActivityPoints.get(j).getCode())) {
+                    allStudentActivityPoints.get(i).setPoints(studentActivityPoints.get(j).getPoints());
+                    studentActivityPoints.remove(j);
+                }
+            }
+        }
+
+        return studentActivityPoints;
+    }
 }

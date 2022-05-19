@@ -24,9 +24,9 @@
             type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.0.0/mdb.min.js"
     ></script>
-    <style>
-        main {
-            background-image: url('../static/images/hero-img.png');
+    <style th:inline="text">
+        body {
+            background: url([[@{/images/hero-bg.png}]]);
             background-repeat: no-repeat;
             background-size: cover;
         }
@@ -71,15 +71,15 @@
 </header>
 
 <main>
-    <div class="d-flex align-items-center justify-content-center">
-        <img class="img-fluid position-relative m-auto w-auto h-auto" th:src="@{images/hero-bg.png}">
-        <div class="position-absolute text-center">
+    <div class="d-flex align-items-center mb-5 mt-5 justify-content-center">
+        <!--<img class="img-fluid position-relative m-auto w-auto h-auto" th:src="@{images/hero-bg.png}">-->
+        <div class="text-center">
             <div>
-                <img class="img-fluid m-auto w-auto h-auto" th:src="@{images/hero-img.png}">
+                <img class="img-fluid m-auto w-75 h-auto" th:src="@{images/hero-img.png}">
             </div>
             <div class="top-50 text-center">
-                <h1 style="font-size: 6rem;">GRADING SYSTEM</h1>
-                <h5 style="font-size: 2.5rem;">Web Programming FINKI</h5>
+                <h1 style="font-size: 4.48rem;">GRADING SYSTEM</h1>
+                <h5 style="font-size: 1.5rem;">Web Programming FINKI</h5>
             </div>
         </div>
     </div>

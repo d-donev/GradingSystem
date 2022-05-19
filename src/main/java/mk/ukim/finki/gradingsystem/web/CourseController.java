@@ -3,10 +3,7 @@ package mk.ukim.finki.gradingsystem.web;
 import mk.ukim.finki.gradingsystem.model.Activity;
 import mk.ukim.finki.gradingsystem.model.Course;
 import mk.ukim.finki.gradingsystem.model.Student;
-import mk.ukim.finki.gradingsystem.service.ActivityService;
-import mk.ukim.finki.gradingsystem.service.CourseService;
-import mk.ukim.finki.gradingsystem.service.StudentActivityPointsService;
-import mk.ukim.finki.gradingsystem.service.StudentService;
+import mk.ukim.finki.gradingsystem.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/courses")
@@ -23,6 +21,7 @@ public class CourseController {
     private final ActivityService activityService;
     private final StudentService studentService;
     private final StudentActivityPointsService studentActivityPointsService;
+
 
     public CourseController(CourseService courseService, ActivityService activityService, StudentService studentService, StudentActivityPointsService studentActivityPointsService) {
         this.courseService = courseService;
@@ -46,6 +45,7 @@ public class CourseController {
         else {
             courses = courseService.listAll();
         }
+
         List<String> years = new ArrayList<>();
         boolean flag = false;
         for(int i=0; i<allCourses.size(); i++) {
@@ -74,6 +74,7 @@ public class CourseController {
         model.addAttribute("activities", activityList);
         model.addAttribute("students", studentList);
         model.addAttribute("studentPoints", studentActivityPointsService.findAll());
+
         return "currentCourse";
     }
 
@@ -89,15 +90,13 @@ public class CourseController {
         }
         model.addAttribute("recentYears", recentYears);
         model.addAttribute("activities", activityList);
-        model.addAttribute("students", studentService.listAll());
         return "createCourse";
     }
 
     @PostMapping("/create")
     public String createCourse(@RequestParam String name,
-                               @RequestParam String year,
-                               @RequestParam List<Long> studentIdList) {
-        courseService.create(name, year, studentIdList);
+                               @RequestParam String year) {
+        courseService.create(name, year);
         return "redirect:/courses";
     }
 
@@ -122,10 +121,8 @@ public class CourseController {
     @PostMapping("/create/{id}")
     public String editCourse(@PathVariable Long id,
                              @RequestParam String name,
-                             @RequestParam String year,
-                             @RequestParam List<Long> activityIdList,
-                             @RequestParam List<Long> studentIdList) {
-        courseService.edit(id,name, year, activityIdList, studentIdList);
+                             @RequestParam String year) {
+        courseService.edit(id,name, year);
         return "redirect:/courses";
     }
 

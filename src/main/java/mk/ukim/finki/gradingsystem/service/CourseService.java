@@ -16,9 +16,9 @@ public interface CourseService {
 
     List<Course> filterCoursesBySearch(String searchText);
 
-    Course create(String name, String year, List<Long> studentList);
+    Course create(String name, String year);
 
-    Course edit(Long courseId, String name, String year, List<Long> activities, List<Long> studentList);
+    Course edit(Long courseId, String name, String year);
 
     Course delete(Long courseId);
 

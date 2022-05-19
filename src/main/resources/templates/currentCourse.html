@@ -22,6 +22,15 @@
         type = "text/javascript"
         src = "https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.0.0/mdb.min.js"
     </script>
+    <style th:inline="text">
+
+
+        body {
+            background: url([[@{/images/hero-bg.png}]]);
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
 </head>
 <body>
 <header>
@@ -60,44 +69,61 @@
     </div>
 </header>
 
-<main class="container h-auto">
+<main class="container-fluid h-auto">
     <div class="m-5">
         <h1 th:text="${course.getName()} + ' - ' + ${course.getYear()}"></h1>
-        <table class="table table-responsive table-stripped">
-            <thead>
-            <th>Index</th>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>Total Points</th>
-            <th>Grade</th>
-            <th></th>
-            </thead>
-            <tbody>
-            <tr th:each="student : ${course.getStudentList()}">
-                <td th:text="${student.getIndex()}"></td>
-                <td th:text="${student.getUser().getName()}"></td>
-                <td th:text="${student.getUser().getSurname()}"></td>
-                <div th:each="grade: ${student.getGrades()}">
+        <div class="row">
+            <div class="col col-9">
+                <table class="table table-responsive table-bordered">
+                    <thead class="bg-dark text-white">
+                    <th>Index</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Total Points</th>
+                    <th>Grade</th>
+                    <th></th>
+                    </thead>
+                    <tbody>
+                    <tr th:each="student : ${course.getStudentList()}">
+                        <td th:text="${student.getIndex()}"></td>
+                        <td th:text="${student.getUser().getName()}"></td>
+                        <td th:text="${student.getUser().getSurname()}"></td>
+                        <div th:each="grade: ${student.getGrades()}">
 
-                    <div th:if="${grade.getCourseId() == course.getId()}">
-                        <td th:text="${grade.getTotalPoints()}"></td>
-                        <td th:text="${grade.getGrade()}"></td>
-                    </div>
+                            <div th:if="${grade.getCourseId() == course.getId()}">
+                                <td th:text="${grade.getTotalPoints()}"></td>
+                                <td th:text="${grade.getGrade()}"></td>
+                            </div>
 
 
-                </div>
-                <td>
-                    <form th:method="DELETE"
-                          th:action="@{'/courses/removeStudentFromCourse/{id}' (id=${student.getIndex()})}">
-                        <button class="btn btn-outline-danger btn-sm">Remove</button>
-                        <input type="hidden" name="courseId" th:value="${course.getId()}">
-                    </form>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <div th:each="activity : ${course.getActivityList()}">
-            <a th:href="@{'/points/{id}' (id=${activity.getCode()})}" th:text="${activity.getName()}"></a>
+                        </div>
+                        <td>
+                            <form th:method="DELETE"
+                                  th:action="@{'/courses/removeStudentFromCourse/{id}' (id=${student.getIndex()})}">
+                                <button class="btn btn-outline-danger btn-sm">Remove</button>
+                                <input type="hidden" name="courseId" th:value="${course.getId()}">
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col offset-1 col-2">
+                <table class="table table-bordered">
+                    <thead>
+                    <th class="text-center">Course activities</th>
+                    </thead>
+                    <tbody>
+                    <tr th:each="activity : ${course.getActivityList()}">
+                        <td class="text-center fw-bold sticky-lg-top">
+                            <a th:href="@{'/points/{id}' (id=${activity.getCode()})}"
+                               th:text="${activity.getName()}"></a>
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <br>
         <br>

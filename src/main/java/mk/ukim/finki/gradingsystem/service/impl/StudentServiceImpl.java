@@ -58,21 +58,19 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     @Transactional
-    public Student createManual(Integer index, String name, String surname, Role role, List<Long> courseId) {
-        List<Course> courseList = this.courseRepositoryJPA.findAllById(courseId);
-        User user = new User(name, surname, role, courseList);
+    public Student createManual(Integer index, String name, String surname, Role role) {
+        List<Course> courses = new ArrayList<>();
+        User user = new User(name, surname, role,courses);
         this.userRepositoryJPA.save(user);
         Student student = new Student(index, user);
         return this.studentRepositoryJPA.save(student);
     }
 
     @Override
-    public Student edit(Integer index, String name, String surname, List<Long> coursesId) {
+    public Student edit(Integer index, String name, String surname) {
         Student student = findById(index);
         student.getUser().setName(name);
         student.getUser().setSurname(surname);
-        List<Course> courses = this.courseRepositoryJPA.findAllById(coursesId);
-        student.getUser().setCourseList(courses);
         return this.studentRepositoryJPA.save(student);
     }
 

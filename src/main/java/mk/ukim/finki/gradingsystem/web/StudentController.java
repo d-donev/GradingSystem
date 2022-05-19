@@ -43,10 +43,9 @@ public class StudentController {
     @PostMapping("/create")
     public String createStudent(@RequestParam Integer index,
                                 @RequestParam String name,
-                                @RequestParam String surname,
-                                @RequestParam Role role,
-                                @RequestParam List<Long> courseIdList) {
-        this.studentService.createManual(index, name, surname, role, courseIdList);
+                                @RequestParam String surname) {
+        Role role = Role.STUDENT;
+        this.studentService.createManual(index, name, surname, role);
         return "redirect:/students";
     }
 
@@ -64,9 +63,8 @@ public class StudentController {
     @PostMapping("/create/{id}")
     public String editStudent(@PathVariable Integer id,
                               @RequestParam String name,
-                              @RequestParam String surname,
-                              @RequestParam List<Long> courseIdList) {
-        this.studentService.edit(id, name, surname, courseIdList);
+                              @RequestParam String surname) {
+        this.studentService.edit(id, name, surname);
         return "redirect:/students";
     }
 

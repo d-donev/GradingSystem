@@ -47,6 +47,7 @@ public class StudentActivityPointsController {
     public String importFile(@PathVariable Long id, @RequestParam String path) {
         PointsExcelImporter excelImporter = new PointsExcelImporter();
         List<StudentActivityPoints> listStudent = excelImporter.excelImport(id, path);
+        listStudent = studentActivityPointsService.filterDuplicates(listStudent);
         Activity activity = activityService.findById(id);
         Course c = activity.getCourse();
         List<Student> students = c.getStudentList();

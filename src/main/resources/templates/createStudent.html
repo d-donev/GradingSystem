@@ -39,16 +39,16 @@
                    th:value="${student?.getUser()?.getSurname()}">
         </div>
 
-        <div class="mb-3">
-            <input type="hidden" class="form-control" id="role" name="role" value="STUDENT">
-        </div>
+<!--        <div class="mb-3">-->
+<!--            <input type="hidden" class="form-control" id="role" name="role" value="STUDENT">-->
+<!--        </div>-->
 
-        <div class="mb-3" th:if="${student == null}">
-            <select name="courseIdList" class="form-select" multiple aria-label="multiple select example">
-                <option th:each="course : ${courses}" th:value="${course.getId()}"
-                        th:text="${course.getName() + '' + course.getYear()}"></option>
-            </select>
-        </div>
+<!--        <div class="mb-3" th:if="${student == null}">-->
+<!--            <select name="courseIdList" class="form-select" multiple aria-label="multiple select example">-->
+<!--                <option th:each="course : ${courses}" th:value="${course.getId()}"-->
+<!--                        th:text="${course.getName() + '' + course.getYear()}"></option>-->
+<!--            </select>-->
+<!--        </div>-->
 
         <div class="mb-3" th:if="${student != null}">
             <h3>Student courses</h3>

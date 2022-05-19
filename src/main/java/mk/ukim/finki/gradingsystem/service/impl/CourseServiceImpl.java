@@ -26,27 +26,15 @@ public class CourseServiceImpl implements CourseService {
         this.studentRepositoryJPA = studentRepositoryJPA;
         this.studentActivityPointsRepositoryJPA = studentActivityPointsRepositoryJPA;
         this.gradesRepositoryJPA = gradesRepositoryJPA;
+
     }
 
     @Override
-    public List<StudentActivityPoints> getPoints(Long activityId)
-    {
+    public List<StudentActivityPoints> getPoints(Long activityId) {
         Long courseId = activityRepositoryJPA.findById(activityId).get().getCourse().getId();
-        List<Activity> courseActivities = courseRepositoryJPA.findById(courseId).get().getActivityList();
-        Activity courseActivity = courseActivities.stream().filter(x -> x.getCode().equals(activityId)).findFirst().orElse(null);
         Course course = courseRepositoryJPA.findById(courseId).orElse(null);
-        Integer numCourses = course.getStudentList().size();
-//        Integer numPoints = activityRepositoryJPA.findById(activityId)
-        List<StudentActivityPoints> students = studentActivityPointsRepositoryJPA.findAll().stream()
-                .filter(x -> x.getCode().equals(activityId)).collect(Collectors.toList());
 
-//        for (int i=0;i<course.getStudentList().size();i++) {
-//            for (int j=0;j<students.size();j++) {
-//                if (course.getStudentList().get(i).getIndex().equals(students.get(j).getIndex())) {
-//                     courseActivities.
-//                }
-//            }
-//        }
+
 
         return null;
     }
@@ -58,7 +46,13 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Course> listAll() {
-        return this.courseRepositoryJPA.findAll();
+        List<Course> courses = courseRepositoryJPA.findAll();
+        List<Course> reversedList = new ArrayList<>();
+
+        for (int i=courses.size()-1;i>-1;i--) {
+            reversedList.add(courses.get(i));
+        }
+        return reversedList;
     }
 
     @Override
@@ -72,20 +66,17 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course create(String name, String year, List<Long> studentList) {
+    public Course create(String name, String year) {
         List<Activity> activityList = new ArrayList<>();
         Course course = new Course(name, year, activityList);
         return this.courseRepositoryJPA.save(course);
     }
 
     @Override
-    public Course edit(Long courseId, String name, String year, List<Long> activities, List<Long> studentList) {
+    public Course edit(Long courseId, String name, String year) {
         Course course = this.findById(courseId);
-        List<Activity> activityList = this.activityRepositoryJPA.findAllById(activities);
-
         course.setName(name);
         course.setYear(year);
-        course.setActivityList(activityList);
         return this.courseRepositoryJPA.save(course);
     }
 
@@ -110,13 +101,13 @@ public class CourseServiceImpl implements CourseService {
         Course c = this.findById(courseId);
         List<Student> students = new ArrayList<>();
         boolean flag = false;
-        for(int i=0; i<studentList.size(); i++) {
-            for(int j=0; j<c.getStudentList().size(); j++) {
-                if(studentList.get(i).getIndex().equals(c.getStudentList().get(j).getIndex())) {
+        for (int i = 0; i < studentList.size(); i++) {
+            for (int j = 0; j < c.getStudentList().size(); j++) {
+                if (studentList.get(i).getIndex().equals(c.getStudentList().get(j).getIndex())) {
                     flag = true;
                 }
             }
-            if(flag == false)
+            if (flag == false)
                 students.add(studentList.get(i));
             flag = false;
         }
@@ -127,11 +118,12 @@ public class CourseServiceImpl implements CourseService {
     public Course addStudentsToCourseManual(Long courseId, List<Integer> studentsId) {
         Course c = this.findById(courseId);
         List<Student> studentList = studentRepositoryJPA.findAllById(studentsId);
-        for(int i=0; i<studentList.size(); i++) {
+    for (int i = 0; i < studentList.size(); i++) {
             c.getStudentList().add(studentList.get(i));
             Grades g = new Grades(studentList.get(i).getIndex(), courseId, 0.0, 5);
             studentList.get(i).getGrades().add(g);
             gradesRepositoryJPA.save(g);
+
         }
         return courseRepositoryJPA.save(c);
     }
