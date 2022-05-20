@@ -71,11 +71,30 @@
 
 <main class="container-fluid h-auto">
     <div class="m-5">
-        <h1 th:text="${course.getName()} + ' - ' + ${course.getYear()}"></h1>
+
+        <div class="row">
+            <div class="col-md-9 col-sm-2">
+                <h1 th:text="${course.getName()} + ' - ' + ${course.getYear()}"></h1>
+            </div>
+            <div class="col-md-3 col-sm-10 my-sm-2">
+                <form method="GET" th:action="@{'/courses/{id}' (id = ${course.getId()})}">
+                    <div class="input-group me-0">
+                        <div class="form-outline">
+                            <input type="search" name="searchText" class="form-control border"
+                                   placeholder="Search..."/>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col col-9">
                 <table class="table table-responsive table-bordered">
-                    <thead class="bg-dark text-white">
+                    <thead class="bg-dark text-white text-center">
                     <th>Index</th>
                     <th>Name</th>
                     <th>Surname</th>
@@ -84,20 +103,17 @@
                     <th></th>
                     </thead>
                     <tbody>
-                    <tr th:each="student : ${course.getStudentList()}">
+                    <tr th:each="student : ${students}">
                         <td th:text="${student.getIndex()}"></td>
                         <td th:text="${student.getUser().getName()}"></td>
                         <td th:text="${student.getUser().getSurname()}"></td>
                         <div th:each="grade: ${student.getGrades()}">
-
                             <div th:if="${grade.getCourseId() == course.getId()}">
                                 <td th:text="${grade.getTotalPoints()}"></td>
-                                <td th:text="${grade.getGrade()}"></td>
+                                <td class="text-center fw-bolder" th:text="${grade.getGrade()}"></td>
                             </div>
-
-
                         </div>
-                        <td>
+                        <td class="text-center">
                             <form th:method="DELETE"
                                   th:action="@{'/courses/removeStudentFromCourse/{id}' (id=${student.getIndex()})}">
                                 <button class="btn btn-outline-danger btn-sm">Remove</button>
@@ -117,8 +133,7 @@
                     <tr th:each="activity : ${course.getActivityList()}">
                         <td class="text-center fw-bold sticky-lg-top">
                             <a th:href="@{'/points/{id}' (id=${activity.getCode()})}"
-                               th:text="${activity.getName()}"></a>
-
+                               th:text="${activity.getName() + ' (' + activity.getPercentage() + '%)'}"></a>
                         </td>
                     </tr>
                     </tbody>
@@ -134,11 +149,6 @@
     </div>
 </main>
 
-<footer class="bg-light text-center text-lg-start position-absolute bottom-0 w-100">
-    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-        © 2022 Copyright:
-        <a class="text-dark" href="#">Grading System</a>
-    </div>
-</footer>
+
 </body>
 </html>

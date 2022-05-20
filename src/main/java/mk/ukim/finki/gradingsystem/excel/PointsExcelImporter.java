@@ -24,9 +24,8 @@ public class PointsExcelImporter {
         int index = 0;
         double Ppoints = 0;
         System.out.println(path);
-        String excelFilePath = "C:\\Users\\USER\\Desktop\\" + path;
+        String excelFilePath = "C:\\Users\\dimit\\Desktop\\" + path;
         //static only
-
 
         long start = System.currentTimeMillis();
 

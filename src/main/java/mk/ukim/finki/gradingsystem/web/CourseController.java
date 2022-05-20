@@ -36,26 +36,24 @@ public class CourseController {
                                  Model model) {
         List<Course> courses = new ArrayList<>();
         List<Course> allCourses = this.courseService.listAll();
-        if(year != null && !year.equals("---")) {
+        if (year != null && !year.equals("---")) {
             courses = this.courseService.filterCoursesByYear(year);
-        }
-        else if(searchText != null && searchText != "") {
+        } else if (searchText != null && searchText != "") {
             courses = this.courseService.filterCoursesBySearch(searchText);
-        }
-        else {
+        } else {
             courses = courseService.listAll();
         }
 
         List<String> years = new ArrayList<>();
         boolean flag = false;
-        for(int i=0; i<allCourses.size(); i++) {
-            for(int j=0; j<years.size(); j++) {
-                if(allCourses.get(i).getYear().equals(years.get(j))) {
+        for (int i = 0; i < allCourses.size(); i++) {
+            for (int j = 0; j < years.size(); j++) {
+                if (allCourses.get(i).getYear().equals(years.get(j))) {
                     flag = true;
                     break;
                 }
             }
-            if(!flag) {
+            if (!flag) {
                 years.add(allCourses.get(i).getYear());
             }
             flag = false;
@@ -66,10 +64,20 @@ public class CourseController {
     }
 
     @GetMapping("/{id}")
-    public String getCoursePage(@PathVariable Long id, Model model) {
+    public String getCoursePage(@PathVariable Long id,
+                                Model model,
+                                @RequestParam(required = false) String searchText) {
         Course course = courseService.findById(id);
+        List<Student> studentList = new ArrayList<>();
+
+        if (searchText == null) {
+            studentList = course.getStudentList();
+        } else {
+            studentList = courseService.filterStudents(searchText, course.getStudentList());
+        }
+
         List<Activity> activityList = course.getActivityList();
-        List<Student> studentList = course.getStudentList();
+
         model.addAttribute("course", course);
         model.addAttribute("activities", activityList);
         model.addAttribute("students", studentList);
@@ -84,7 +92,7 @@ public class CourseController {
         List<Activity> activityList = activityService.listAll();
         int year = Calendar.getInstance().get(Calendar.YEAR);
         String yearFinal;
-        for(int i=0; i<5; i++) {
+        for (int i = 0; i < 5; i++) {
             yearFinal = year + "/" + ++year;
             recentYears.add(yearFinal);
         }
@@ -107,7 +115,7 @@ public class CourseController {
         List<Activity> activityList = activityService.listAll();
         int year = Calendar.getInstance().get(Calendar.YEAR);
         String yearFinal;
-        for(int i=0; i<5; i++) {
+        for (int i = 0; i < 5; i++) {
             yearFinal = year + "/" + ++year;
             recentYears.add(yearFinal);
         }
@@ -122,7 +130,7 @@ public class CourseController {
     public String editCourse(@PathVariable Long id,
                              @RequestParam String name,
                              @RequestParam String year) {
-        courseService.edit(id,name, year);
+        courseService.edit(id, name, year);
         return "redirect:/courses";
     }
 
@@ -152,6 +160,6 @@ public class CourseController {
     public String removeStudentFromCourse(@PathVariable Integer id,
                                           @RequestParam Long courseId) {
         courseService.removeStudentFromCourse(courseId, id);
-        return "redirect:/courses/"+courseId;
+        return "redirect:/courses/" + courseId;
     }
 }

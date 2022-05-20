@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit activity points</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container m-5">
+    <h5>Edit points for student with index: <span class="fw-bolder" th:text="${currentStudent.getIndex()}"></span></h5>
+    <form th:method="POST" th:action="@{'/points/{id}/editPoints' (id=${currentStudent?.getId()})}">
+        <div class="mb-3">
+            <label for="points" class="form-label">Points</label>
+            <input type="number"
+                   class="form-control"
+                   id="points"
+                   name="points"
+                   th:value="${currentStudent?.getPoints()}"
+                   required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a href="/activity" class="btn btn-dark">BACK</a>
+    </form>
+</div>
+</body>
+</html>

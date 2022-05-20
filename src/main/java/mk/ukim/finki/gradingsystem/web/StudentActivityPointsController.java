@@ -11,11 +11,9 @@ import mk.ukim.finki.gradingsystem.service.GradesService;
 import mk.ukim.finki.gradingsystem.service.StudentActivityPointsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -35,9 +33,16 @@ public class StudentActivityPointsController {
     }
 
     @GetMapping("/{id}")
-    public String getPointsPage(@PathVariable Long id, Model model) {
+    public String getPointsPage(@PathVariable Long id,
+                                Model model,
+                                @RequestParam(required = false) String searchText) {
         Activity activity = activityService.findById(id);
-        List<StudentActivityPoints> studentActivityPoints = studentActivityPointsService.findAll();
+        List<StudentActivityPoints> studentActivityPoints = new ArrayList<>();
+        if(searchText == null) {
+            studentActivityPoints = studentActivityPointsService.findAll();
+        } else{
+                studentActivityPoints = studentActivityPointsService.filterStudentActivityPoints(searchText, activity.getCode());
+        }
         model.addAttribute("activity", activity);
         model.addAttribute("points", studentActivityPoints);
         return "points";
@@ -54,5 +59,19 @@ public class StudentActivityPointsController {
         studentActivityPointsService.saveAll(listStudent);
         gradesService.updatePoints(students, c.getId());
         return "redirect:/points/{id}";
+    }
+
+    @GetMapping("/{id}/editPoints")
+    public String editPoints(@PathVariable Long id, Model model) {
+        StudentActivityPoints student = studentActivityPointsService.findById(id);
+        model.addAttribute("studentActivityPointsId", id);
+        model.addAttribute("currentStudent", student);
+        return "editActivityPoints";
+    }
+
+    @PostMapping("/{id}/editPoints")
+    public String editPoints(@PathVariable Long id, @RequestParam Double points) {
+        studentActivityPointsService.editStudentPoints(id, points);
+        return "redirect:/points/" + studentActivityPointsService.findById(id).getCode();
     }
 }

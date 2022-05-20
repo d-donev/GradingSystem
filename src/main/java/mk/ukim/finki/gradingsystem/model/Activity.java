@@ -1,6 +1,8 @@
 package mk.ukim.finki.gradingsystem.model;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.SQLDelete;
@@ -8,7 +10,8 @@ import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
 @Entity
 @SQLDelete(sql = "UPDATE activity SET deleted = true WHERE code=?")
 @Where(clause = "deleted = false")

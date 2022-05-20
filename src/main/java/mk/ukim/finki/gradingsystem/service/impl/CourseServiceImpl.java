@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,9 +34,6 @@ public class CourseServiceImpl implements CourseService {
     public List<StudentActivityPoints> getPoints(Long activityId) {
         Long courseId = activityRepositoryJPA.findById(activityId).get().getCourse().getId();
         Course course = courseRepositoryJPA.findById(courseId).orElse(null);
-
-
-
         return null;
     }
 
@@ -137,5 +135,12 @@ public class CourseServiceImpl implements CourseService {
         s.getGrades().remove(g);
         gradesRepositoryJPA.delete(g);
         return courseRepositoryJPA.save(c);
+    }
+
+    @Override
+    public List<Student> filterStudents(String searchText, List<Student> studentsInCourse) {
+        return studentsInCourse.stream()
+                .filter(x -> x.getIndex().toString().contains(searchText) || x.getUser().getName().toLowerCase().contains(searchText.toLowerCase()) ||x.getUser().getSurname().toLowerCase().contains(searchText.toLowerCase()))
+                .collect(Collectors.toList());
     }
 }
