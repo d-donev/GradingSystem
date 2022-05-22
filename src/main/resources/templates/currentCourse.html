@@ -41,6 +41,8 @@
                 let grade = parseInt(students.item(i).children[4].innerHTML)
                 if(grade === 5) {
                     students.item(i).classList.add("color")
+                    var el = students.item(i).lastElementChild
+                    el.classList.add("bg-white")
                 }
             }
             console.log(students)
@@ -93,20 +95,24 @@
                 <h1 th:text="${course.getName()} + ' - ' + ${course.getYear()}"></h1>
                 <form th:method="GET" th:action="@{'/courses/importStudents/{id}' (id=${course.getId()})}">
                     <input type="file" name="path" class="form-control">
-                    <button class="btn btn-outline-success">Import Via Excel</button>
+                    <button class="btn btn-outline-success mt-2 mb-3">Import Via Excel</button>
                 </form>
             </div>
             <div class="col-md-3 col-sm-10 my-sm-2">
+                <div>
+                    <a href="/courses" class="btn btn-dark mb-2 float-end">BACK</a>
+                </div>
                 <form method="GET" th:action="@{'/courses/{id}' (id = ${course.getId()})}">
-                    <div class="input-group me-0">
+                    <div class="input-group me-0 float-end">
                         <div class="form-outline">
-                            <input type="search" name="searchText" class="form-control border"
+                            <input type="search" name="searchText" class="form-control border float-end"
                                    placeholder="Search..."/>
                         </div>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-search"></i>
+                        <button type="submit" class="btn btn-primary float-end">
+                            <i class="fas fa-search float-end"></i>
                         </button>
                     </div>
+
                 </form>
             </div>
         </div>
@@ -120,7 +126,10 @@
                     <th>Surname</th>
                     <th>Total Points</th>
                     <th>Grade</th>
-                    <th></th>
+                    <th class="btn btn-dark btn-sm">
+                        <a th:href="@{'/courses/addStudentsManual/{id}' (id=${course.getId()})}">Add student to
+                            course</a>
+                    </th>
                     </thead>
                     <tbody>
                     <tr class="studentInfo fw-bold" th:each="student : ${students}">
@@ -133,7 +142,7 @@
                                 <td class="text-center studentGrade" th:text="${grade.getGrade()}"></td>
                             </div>
                         </div>
-                        <td class="text-center">
+                        <td class="deleteButton text-center">
                             <form th:method="DELETE"
                                   th:action="@{'/courses/removeStudentFromCourse/{id}' (id=${student.getIndex()})}">
                                 <button class="btn btn-outline-danger btn-sm">Remove</button>
@@ -158,14 +167,13 @@
                     </tr>
                     </tbody>
                 </table>
+                <a th:href="@{'/activity/create/{id}' (id=${course.getId()})}" class="btn btn-success mt-3">Add activity</a>
+
             </div>
         </div>
         <br>
         <br>
-        <a th:href="@{'/courses/addStudentsManual/{id}' (id=${course.getId()})}" class="btn btn-dark">Add student to
-            course</a>
-        <a th:href="@{'/activity/create/{id}' (id=${course.getId()})}" class="btn btn-dark">Add activity</a>
-        <a href="/courses" class="btn btn-dark">BACK</a>
+
     </div>
 </main>
 

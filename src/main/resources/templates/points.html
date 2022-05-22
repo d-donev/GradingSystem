@@ -34,22 +34,65 @@
 </head>
 <body>
 <header>
+    <div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="/">HOME</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/courses">Courses</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/teachers">Professors</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/students">Students</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/activity">Activities</a>
+                        </li>
 
+                    </ul>
+                    <form class="d-flex">
+                        <button class="btn btn-outline-success me-2" type="submit">Login</button>
+                        <button class="btn btn-outline-primary" type="submit">Register</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </div>
 </header>
 <div class="container m-5">
-    <main>
-        <div>
-            <form th:method="GET" th:action="@{'/points/import/{id}' (id=${activity.getCode()})}">
-                <input type="file" name="path" class="btn btn-success">
-                <button type="submit" class="btn btn-info">Import</button>
-            </form>
-        </div>
 
-        <div class="row">
-            <div class="col-md-8 col-sm-2">
+    <main>
+        <div class="row mb-2">
+            <div class="col col-9">
                 <h1 th:text="${activity.getName()}"></h1>
             </div>
-            <div class="col-md-4 col-sm-10 my-sm-2">
+            <div class="col col-2 ">
+                <form th:method="GET" th:action="@{'activity/edit/{id}' (id=${activity.getCode()})}">
+                    <button type="submit" class="btn btn-info mt-2 float-end">Edit activity</button>
+                </form>
+            </div>
+            <div class="col col-1 mt-2 ">
+                <a th:href="@{'/courses/{id}' (id=${activity.getCourse().getId()})}" class="btn btn-dark float-start">BACK</a>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col col-8">
+                <form th:method="GET" th:action="@{'/points/import/{id}' (id=${activity.getCode()})}">
+                    <input type="file" name="path" class="btn btn-success">
+                    <button type="submit" class="btn btn-info">Import</button>
+                </form>
+            </div>
+
+            <div class="col offset-1 col-3">
                 <form method="GET" th:action="@{'/points/{id}' (id=${activity.getCode()})}">
                     <div class="input-group">
                         <div class="form-outline">
@@ -61,6 +104,11 @@
                         </button>
                     </div>
                 </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 col-sm-10 my-sm-2">
             </div>
         </div>
 
@@ -85,7 +133,6 @@
 
         <br>
         <br>
-        <a th:href="@{'/courses/{id}' (id=${activity.getCourse().getId()})}" class="btn btn-dark">BACK</a>
     </main>
 </div>
 </body>

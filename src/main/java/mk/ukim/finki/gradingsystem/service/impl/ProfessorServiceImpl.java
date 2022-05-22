@@ -49,12 +49,10 @@ public class ProfessorServiceImpl implements ProfessorService {
     }
 
     @Override
-    public Professor edit(String email, String name, String surname, List<Long> courseId) {
-        List<Course> courses = this.courseRepositoryJPA.findAllById(courseId);
+    public Professor edit(String email, String name, String surname) {
         Professor professor = this.findByEmail(email);
         professor.getUser().setName(name);
         professor.getUser().setSurname(surname);
-        professor.getUser().setCourseList(courses);
         return this.professorRepositoryJPA.save(professor);
     }
 
@@ -63,6 +61,11 @@ public class ProfessorServiceImpl implements ProfessorService {
         Professor professor = this.findByEmail(email);
         this.professorRepositoryJPA.delete(professor);
         return professor;
+    }
+
+    @Override
+    public Professor save(Professor professor) {
+        return professorRepositoryJPA.save(professor);
     }
 
     @Override

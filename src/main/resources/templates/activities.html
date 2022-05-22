@@ -69,7 +69,15 @@
 </header>
 <main>
     <div class="container m-5">
-        <h1>Activities</h1>
+        <div class="row">
+            <h1 class="col col-10">Activities</h1>
+            <div class="col offset-1 col-1">
+                <a href="/" class="btn btn-dark">BACK</a>
+
+            </div>
+
+        </div>
+        <div class="12">
         <table class="table table-stripped">
             <thead>
             <th>Name</th>
@@ -86,19 +94,18 @@
                 <td th:text="${a.getMinimum()}"></td>
                 <td>
                     <form th:method="DELETE" th:action="@{'/activity/{id}/delete' (id=${a.getCode()})}">
-                        <button type="submit" class="btn btn-dark">Delete</button>
+                        <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
                 </td>
             </tr>
             </tbody>
         </table>
+        </div>
         <br>
         <br>
-        <a href="/activity/create" class="btn btn-dark">Create</a>
-        <a href="/" class="btn btn-dark">BACK</a>
     </div>
 </main>
-<footer class="bg-light text-center text-lg-start bottom-0 w-100">
+<footer class="bg-light text-center text-lg-start mt-5 bottom-0 w-100">
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
         © 2022 Copyright:
         <a class="text-dark" href="#">Grading System</a>

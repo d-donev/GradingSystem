@@ -4,7 +4,17 @@
     <meta charset="UTF-8">
     <title>Create students</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <style th:inline="text">
+
+
+        body {
+            background: url([[@{/images/hero-bg.png}]]);
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
 </head>
+
 <body>
 <div class="container m-5">
     <h1 class="m-5" th:text="${student == null ? 'Create Student' : 'Edit Student'}"></h1>

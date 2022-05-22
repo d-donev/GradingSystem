@@ -1,0 +1,50 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Create Activity</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+</head>
+<body>
+
+
+<div class="container m-5">
+    <h1>Edit activity</h1>
+    <form th:method="POST" th:action="@{'/points/activity/edit/{id}' (id=${activity.getCode()})}">
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text"
+                   class="form-control"
+                   id="name"
+                   name="name"
+                   th:value="${activity.getName()}"
+                   required>
+        </div>
+
+
+        <div class="mb-3">
+            <label for="percentage" class="form-label">Percentage</label>
+            <input type="text"
+                   class="form-control"
+                   id="percentage"
+                   name="percentage"
+                   th:value="${activity.getPercentage()}"
+
+                   required>
+        </div>
+
+        <div class="mb-3">
+            <label for="min" class="form-label">Minimim</label>
+            <input type="text"
+                   class="form-control"
+                   id="min"
+                   name="min"
+                   th:value="${activity.getMinimum()}"
+                   required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a th:href="@{'/points/{id}' (id=${activity.getCode()})}" class="btn btn-dark">BACK</a>
+    </form>
+</div>
+</body>
+</html>

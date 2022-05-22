@@ -68,34 +68,45 @@
         </nav>
     </div>
 </header>
-<div class="container">
-    <h1 class="m-5">Students</h1>
-    <table class="table table-stripped">
-        <tr>
-            <th>Index</th>
-            <th>Name</th>
-            <th>Surname</th>
-            <th></th>
-        </tr>
-        <tr th:each="student : ${students}">
-            <td th:text="${student.getIndex()}">Index</td>
-            <td th:text="${student.getUser().getName()}">Name</td>
-            <td th:text="${student.getUser().getSurname()}">Surname</td>
-            <td>
-                <form th:method="GET" th:action="@{'/students/{id}/edit' (id=${student.getIndex()})}">
-                    <button type="submit" class="btn btn-sm btn-dark">Edit</button>
-                </form>
-                <form th:method="DELETE" th:action="@{'/students/{id}/delete' (id=${student.getIndex()})}">
-                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                </form>
-            </td>
-        </tr>
-    </table>
-    <br>
-    <a href="/students/create" class="btn btn-dark">Create student</a>
-    <a href="/" class="btn btn-dark">BACK</a>
-</div>
-<footer class="bg-light text-center text-lg-start position-absolute bottom-0 w-100">
+<main>
+    <div class="container m-5">
+        <div class="row">
+            <div class="col col-11 ">
+                <h1 >Students</h1>
+                <a href="/students/create" class="btn btn-success mt-2 mb-4">New student</a>
+
+            </div>
+            <div class="col col-1">
+                <a href="/" class="btn btn-dark">BACK</a>
+            </div>
+        </div>
+        <div class="row">
+            <table class="table table-stripped">
+                <tr>
+                    <th>Index</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th></th>
+                </tr>
+                <tr th:each="student : ${students}">
+                    <td th:text="${student.getIndex()}">Index</td>
+                    <td th:text="${student.getUser().getName()}">Name</td>
+                    <td th:text="${student.getUser().getSurname()}">Surname</td>
+                    <td>
+                        <form th:method="GET" th:action="@{'/students/{id}/edit' (id=${student.getIndex()})}">
+                            <button type="submit" class="btn btn-sm btn-dark">Edit</button>
+                        </form>
+                        <form th:method="DELETE" th:action="@{'/students/{id}/delete' (id=${student.getIndex()})}">
+                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <br>
+    </div>
+</main>
+<footer class="bg-light text-center text-lg-start mt-5 bottom-0 w-100">
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
         © 2022 Copyright:
         <a class="text-dark" href="#">Grading System</a>

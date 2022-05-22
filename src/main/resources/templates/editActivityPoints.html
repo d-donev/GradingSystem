@@ -5,6 +5,13 @@
     <title>Edit activity points</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 </head>
+<style th:inline="text">
+    body {
+        background: url([[@{/images/hero-bg.png}]]);
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+</style>
 <body>
 <div class="container m-5">
     <h5>Edit points for student with index: <span class="fw-bolder" th:text="${currentStudent.getIndex()}"></span></h5>

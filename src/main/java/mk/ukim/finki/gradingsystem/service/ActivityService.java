@@ -15,4 +15,6 @@ public interface ActivityService {
     Activity edit(Long code, String name,Long courseId, Double percentage, Double min);
 
     Activity delete(Long code);
+
+    Activity save (Activity activity);
 }

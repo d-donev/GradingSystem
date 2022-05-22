@@ -58,4 +58,9 @@ public class ActivityServiceImpl implements ActivityService {
         this.activityRepositoryJPA.delete(activity);
         return activity;
     }
+
+    @Override
+    public Activity save(Activity activity) {
+        return activityRepositoryJPA.save(activity);
+    }
 }

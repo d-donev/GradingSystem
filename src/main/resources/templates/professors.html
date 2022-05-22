@@ -69,29 +69,49 @@
 </header>
 <main>
     <div class="container m-5">
-        <h1>Professors</h1>
+        <div class="row">
+            <div class="col col-11">
+                <h1>Professors</h1>
+                <a href="/teachers/create" class="btn btn-success mt-2 mb-4 ">New profesor</a>
+
+            </div>
+
+            <div class="col col-1">
+                <a href="/" class="btn btn-dark">BACK</a>
+
+            </div>
+        </div>
+    <div class="row">
         <table class="table table-stripped">
             <thead>
             <th>E-mail</th>
             <th>Name</th>
             <th>Surname</th>
-
+            <th></th>
             </thead>
             <tbody>
             <tr th:each="professor : ${professors}">
                 <td th:text="${professor.getEmail()}">Email</td>
                 <td th:text="${professor.getUser().getName()}">Name</td>
                 <td th:text="${professor.getUser().getSurname()}">Surname</td>
+                <td>
+                    <form th:method="GET" th:action="@{'/teachers/create/{id}' (id=${professor.getEmail()})}">
+                        <button type="submit" class="btn btn-sm btn-dark">Edit</button>
+                    </form>
+                    <form th:method="DELETE" th:action="@{'/teachers/{id}/delete' (id=${professor.getEmail()})}">
+                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>
+    </div>
         <br>
         <br>
-        <a href="/teachers/create" class="btn btn-dark">Create</a>
-        <a href="/" class="btn btn-dark">BACK</a>
+
     </div>
 </main>
-<footer class="bg-light text-center text-lg-start position-absolute bottom-0 w-100">
+<footer class="bg-light text-center text-lg-start bottom-0 w-100">
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
         © 2022 Copyright:
         <a class="text-dark" href="#">Grading System</a>

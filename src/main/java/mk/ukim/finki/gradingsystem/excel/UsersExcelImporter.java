@@ -25,7 +25,7 @@ public class UsersExcelImporter {
         String surname = "";
         String email;
 
-        String excelFilePath = "C:\\Users\\User.DESKTOP-9R41TC1\\Desktop\\" + path;
+        String excelFilePath = "C:\\Users\\USER\\Desktop\\" + path;
 
         long start = System.currentTimeMillis();
 

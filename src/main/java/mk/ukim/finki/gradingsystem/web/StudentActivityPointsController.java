@@ -74,4 +74,27 @@ public class StudentActivityPointsController {
         studentActivityPointsService.editStudentPoints(id, points);
         return "redirect:/points/" + studentActivityPointsService.findById(id).getCode();
     }
+
+    @GetMapping("/activity/edit/{id}")
+    public String editActivity(@PathVariable Long id, Model model) {
+        Activity activity = activityService.findById(id);
+        model.addAttribute("activity", activity);
+        return "editActivity";
+    }
+
+    @PostMapping("/activity/edit/{id}")
+    public String editActivity(@PathVariable Long id,
+                               @RequestParam String name,
+                               @RequestParam Double percentage,
+                               @RequestParam Double min) {
+        Activity activity = activityService.findById(id);
+        activity.setName(name);
+        activity.setPercentage(percentage);
+        activity.setMinimum(min);
+        activityService.save(activity);
+        List<Student> students = activity.getCourse().getStudentList();
+        Long courseId = activity.getCourse().getId();
+        gradesService.updatePoints(students,courseId);
+        return "redirect:/points/" + id;
+    }
 }
