@@ -1,7 +1,7 @@
 package mk.ukim.finki.gradingsystem.excel;
 
+import mk.ukim.finki.gradingsystem.enumerations.Role;
 import mk.ukim.finki.gradingsystem.model.Student;
-import mk.ukim.finki.gradingsystem.model.StudentActivityPoints;
 import mk.ukim.finki.gradingsystem.model.User;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -16,10 +16,9 @@ import java.util.List;
 
 public class UsersExcelImporter {
 
-    public List<StudentActivityPoints> excelStudentsImport(String path) {
+    public List<Student> excelStudentsImport(String path) {
 
         List<Student> listStudents = new ArrayList<>();
-        List<User> listUsers = new ArrayList<>();
 
         int index = 0;
         String name = "";
@@ -54,14 +53,10 @@ public class UsersExcelImporter {
                         case 2:
                             surname = nextCell.getStringCellValue();
                             break;
-                        case 3:
-                            email = nextCell.getStringCellValue();
                     }
 
-                    //listStudents.add(new Student(index, new User(name, surname)));
                 }
-
-
+                listStudents.add(new Student(index, new User(name, surname, Role.STUDENT, new ArrayList<>()), new ArrayList<>()));
             }
             workbook.close();
             long end = System.currentTimeMillis();
@@ -74,6 +69,6 @@ public class UsersExcelImporter {
         }
 
 
-        return null;
+        return listStudents;
     }
 }

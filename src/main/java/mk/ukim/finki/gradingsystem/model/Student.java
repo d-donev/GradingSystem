@@ -2,10 +2,7 @@ package mk.ukim.finki.gradingsystem.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.List;
 
 @Data
@@ -18,7 +15,7 @@ public class Student {
     @OneToOne
     private User user;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     List<Grades> grades;
 
     public Student() {
@@ -28,5 +25,11 @@ public class Student {
     public Student(Integer index, User user) {
         this.index = index;
         this.user = user;
+    }
+
+    public Student(Integer index, User user, List<Grades> grades) {
+        this.index = index;
+        this.user = user;
+        this.grades = grades;
     }
 }

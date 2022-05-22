@@ -23,14 +23,30 @@
         src = "https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.0.0/mdb.min.js"
     </script>
     <style th:inline="text">
-
-
         body {
             background: url([[@{/images/hero-bg.png}]]);
             background-repeat: no-repeat;
             background-size: cover;
         }
+
+        .color {
+            background-color: #ff6f6f;
+        }
     </style>
+    <script>
+        window.addEventListener('load', (event) => {
+            let students = []
+            students = document.getElementsByClassName("studentInfo");
+            for(let i=0; i<students.length; i++) {
+                let grade = parseInt(students.item(i).children[4].innerHTML)
+                if(grade === 5) {
+                    students.item(i).classList.add("color")
+                }
+            }
+            console.log(students)
+
+        });
+    </script>
 </head>
 <body>
 <header>
@@ -75,6 +91,10 @@
         <div class="row">
             <div class="col-md-9 col-sm-2">
                 <h1 th:text="${course.getName()} + ' - ' + ${course.getYear()}"></h1>
+                <form th:method="GET" th:action="@{'/courses/importStudents/{id}' (id=${course.getId()})}">
+                    <input type="file" name="path" class="form-control">
+                    <button class="btn btn-outline-success">Import Via Excel</button>
+                </form>
             </div>
             <div class="col-md-3 col-sm-10 my-sm-2">
                 <form method="GET" th:action="@{'/courses/{id}' (id = ${course.getId()})}">
@@ -103,14 +123,14 @@
                     <th></th>
                     </thead>
                     <tbody>
-                    <tr th:each="student : ${students}">
+                    <tr class="studentInfo fw-bold" th:each="student : ${students}">
                         <td th:text="${student.getIndex()}"></td>
                         <td th:text="${student.getUser().getName()}"></td>
                         <td th:text="${student.getUser().getSurname()}"></td>
                         <div th:each="grade: ${student.getGrades()}">
                             <div th:if="${grade.getCourseId() == course.getId()}">
                                 <td th:text="${grade.getTotalPoints()}"></td>
-                                <td class="text-center fw-bolder" th:text="${grade.getGrade()}"></td>
+                                <td class="text-center studentGrade" th:text="${grade.getGrade()}"></td>
                             </div>
                         </div>
                         <td class="text-center">

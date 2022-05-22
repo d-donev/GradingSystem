@@ -24,7 +24,7 @@ public class PointsExcelImporter {
         int index = 0;
         double Ppoints = 0;
         System.out.println(path);
-        String excelFilePath = "C:\\Users\\dimit\\Desktop\\" + path;
+        String excelFilePath = "C:\\Users\\User.DESKTOP-9R41TC1\\Desktop\\" + path;
         //static only
 
         long start = System.currentTimeMillis();
@@ -56,7 +56,7 @@ public class PointsExcelImporter {
                 List<Integer> list = new ArrayList<>();
                 list.add(index);
 
-                    listStudent.add(new StudentActivityPoints(index, code, Ppoints));
+                listStudent.add(new StudentActivityPoints(index, code, Ppoints));
 
                 list.clear();
             }

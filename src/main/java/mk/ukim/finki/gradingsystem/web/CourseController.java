@@ -162,4 +162,10 @@ public class CourseController {
         courseService.removeStudentFromCourse(courseId, id);
         return "redirect:/courses/" + courseId;
     }
+
+    @GetMapping("/importStudents/{id}")
+    public String importStudents(@PathVariable Long id, @RequestParam String path) {
+        courseService.importStudents(id,path);
+        return "redirect:/courses/{id}";
+    }
 }

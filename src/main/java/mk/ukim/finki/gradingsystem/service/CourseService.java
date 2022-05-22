@@ -31,5 +31,8 @@ public interface CourseService {
     Course removeStudentFromCourse(Long courseId, Integer studentId);
 
     List<StudentActivityPoints> getPoints(Long activityid);
+
     List<Student> filterStudents(String searchText, List<Student> studentsInCourse);
+
+    void importStudents(Long courseId, String path);
 }
