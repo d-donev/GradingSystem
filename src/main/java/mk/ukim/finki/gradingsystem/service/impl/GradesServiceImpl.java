@@ -63,6 +63,7 @@ public class GradesServiceImpl implements GradesService {
                     }
                 }
             }
+            totalPoints = (double) Math.round(totalPoints * 100) / 100;
             if(totalPoints < 50) grade = 5;
             else if(totalPoints >= 50 && totalPoints < 60) grade = 6;
             else if(totalPoints >= 60 && totalPoints < 70) grade = 7;

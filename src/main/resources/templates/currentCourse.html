@@ -124,6 +124,7 @@
                     <th>Index</th>
                     <th>Name</th>
                     <th>Surname</th>
+                    <th th:if="${activity.getCourse().getId() == course.getId()}" th:each="activity : ${activities}" th:text="${activity.getName()}"></th>
                     <th>Total Points</th>
                     <th>Grade</th>
                     <th class="btn btn-dark btn-sm">
@@ -136,6 +137,11 @@
                         <td th:text="${student.getIndex()}"></td>
                         <td th:text="${student.getUser().getName()}"></td>
                         <td th:text="${student.getUser().getSurname()}"></td>
+                        <div th:each="points : ${studentPoints}">
+                            <div th:each="acitivty : ${activities}">
+                                <td th:if="${points.getCode() == acitivty.getCode() && points.getIndex() == student.getIndex()}" th:text="${points.getPoints()}"></td>
+                            </div>
+                        </div>
                         <div th:each="grade: ${student.getGrades()}">
                             <div th:if="${grade.getCourseId() == course.getId()}">
                                 <td th:text="${grade.getTotalPoints()}"></td>

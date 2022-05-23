@@ -93,7 +93,7 @@ public class StudentActivityPointsServiceImpl implements StudentActivityPointsSe
         else if(total >= 70 && total < 80) g = 8;
         else if(total >= 80 && total < 90) g = 9;
         else if(total >= 90) g = 10;
-
+        total = (double) Math.round(total * 100) / 100;
         grade.setTotalPoints(total);
         grade.setGrade(g);
 
